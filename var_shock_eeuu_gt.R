@@ -30,7 +30,7 @@ cat("\014")
 # Datos del IMAE
 # Fuente: https://banguat.gob.gt/page/indice-mensual-de-la-actividad-economica-imae-ano-de-referencia-2013
 # -----------------------------------------------------------------------------
-df_imae <- read_excel("imae_2.xlsx", sheet = 2)
+df_imae <- read_excel("input/imae_2.xlsx", sheet = 2)
 df_imae <- df_imae |> dplyr::rename(fecha = 1, imae = 2)
 df_imae <- df_imae |> mutate(fecha = as.Date(fecha))
 
@@ -44,7 +44,7 @@ meses <- c(
   "mayo" = "05", "junio" = "06", "julio" = "07", "agosto" = "08",
   "septiembre" = "09", "octubre" = "10", "noviembre" = "11", "diciembre" = "12"
 )
-df_temp <- read_excel("remesas.xlsx", sheet = 1, range = "B10:AA22")
+df_temp <- read_excel("input/remesas.xlsx", sheet = 1, range = "B10:AA22")
 df_remesas <- df_temp |> 
   tidyr::pivot_longer(cols = -Mes, names_to = "anio", values_to="remesas") |>
   dplyr::mutate(fecha = as.Date(paste(anio, meses[tolower(Mes)], "01", sep="-"))) |>
@@ -58,7 +58,7 @@ plot(df_remesas)
 # Fuente: https://banguat.gob.gt/page/mensuales-1995-la-fecha
 # -----------------------------------------------------------------------------
 
-df_temp <- read_excel("rmi_netas.xlsx", sheet = 1, range = "A6:AG18")
+df_temp <- read_excel("input/rmi_netas.xlsx", sheet = 1, range = "A6:AG18")
 df_rmi <- df_temp |>
   tidyr::pivot_longer(cols = -MES, names_to = "anio", values_to = "rmi") |>
   dplyr::mutate(fecha = as.Date(paste(anio, meses[tolower(MES)], "01", sep="-"))) |>
@@ -70,7 +70,7 @@ rm(df_temp)
 # Datos de Índice de Precios al Consumidor (IPC) intermensual
 # Fuente: https://banguat.gob.gt/page/indice-intermensual-interanual-y-acumulada
 # -----------------------------------------------------------------------------
-df_ipc <- read_excel("ipc.xlsx", sheet = 2)
+df_ipc <- read_excel("input/ipc.xlsx", sheet = 2)
 df_ipc <- df_ipc |> 
   mutate(fecha = as.Date(PERIODO)) |>
   dplyr::rename(ipc = 3) |>
@@ -81,7 +81,7 @@ df_ipc <- df_ipc |>
 # Datos de la Blanza Comercial (Exportaciones - Importaciones) en US dólares
 # Fuente: https://banguat.gob.gt/page/serie-de-comercio-exterior-por-inciso-arancerlario-8-y-10-digitos
 # -----------------------------------------------------------------------------
-df_bc <- read_excel("balanza_comercial.xlsx", sheet = 2)
+df_bc <- read_excel("input/balanza_comercial.xlsx", sheet = 2)
 df_bc <- df_bc |>
   dplyr::mutate(fecha = as.Date(periodo), bc = exportaciones/importaciones) |>
   dplyr::select(fecha, bc)
@@ -90,7 +90,7 @@ df_bc <- df_bc |>
 # Datos Tasa de Interés Líder de la Política Monetaria de Guatemala
 # Fuente: https://banguat.gob.gt/indicadoresgt/
 # -----------------------------------------------------------------------------
-df_i <- read_excel("tasa_lider.xlsx")
+df_i <- read_excel("input/tasa_lider.xlsx")
 df_i <- df_i |> 
   dplyr::mutate(fecha = as.Date(fecha)) |>
   dplyr::rename(i = 7) |>
@@ -102,7 +102,7 @@ df_i <- df_i |>
 #          https://banguat.gob.gt/page/de-venta-promedio-del-mes
 #          https://banguat.gob.gt/page/indice-intermensual-interanual-y-acumulada
 # ------------------------------------------------------------------------------
-df_tcr <- read_excel("construccion_tcr_bilateral.xlsx", sheet = 2)
+df_tcr <- read_excel("input/construccion_tcr_bilateral.xlsx", sheet = 2)
 df_tcr <- df_tcr |>
   dplyr::rename(tcr = 5) |>
   dplyr::select(fecha, tcr)
@@ -113,7 +113,7 @@ df_tcr <- df_tcr |>
 # Datos de EE.UU para proxy de supply Industrial Production (index)
 # Fuente: https://fred.stlouisfed.org/series/INDPRO
 # -----------------------------------------------------------------------------
-df_indpro <- read_excel("INDPRO.xlsx", sheet = 2)
+df_indpro <- read_excel("input/INDPRO.xlsx", sheet = 2)
 df_indpro <- df_indpro |> dplyr::mutate(fecha = as.Date(observation_date)) |>
   rename(indpro = 2)
 
@@ -121,7 +121,7 @@ df_indpro <- df_indpro |> dplyr::mutate(fecha = as.Date(observation_date)) |>
 # Datos de EE.UU para proxy de shock monetario Tasa de Interes Efectiva Federal
 # Fuente: https://fred.stlouisfed.org/series/DFF
 # -----------------------------------------------------------------------------
-df_fedfunds <- read_excel("FEDFUNDS.xlsx", sheet = 2)
+df_fedfunds <- read_excel("input/FEDFUNDS.xlsx", sheet = 2)
 df_fedfunds <- df_fedfunds |> dplyr::mutate(fecha = as.Date(observation_date)) |> 
   rename(fedfunds = 2)
 
@@ -131,7 +131,7 @@ df_fedfunds <- df_fedfunds |> dplyr::mutate(fecha = as.Date(observation_date)) |
 # Fuente: https://fred.stlouisfed.org/series/PCEC96
 # -----------------------------------------------------------------------------
 
-df_pce <- read_excel("PCEC96.xlsx", sheet = 2)
+df_pce <- read_excel("input/PCEC96.xlsx", sheet = 2)
 df_pce <- df_pce |> dplyr::mutate(fecha = as.Date(observation_date)) |>
   rename(pce = 2)
 
@@ -177,9 +177,6 @@ df_fedfunds <- df_fedfunds |>
 # Pasar todas las fechas al primer día del mes
 lista_dfs <- list(df_bc, df_i, df_imae, df_ipc, df_remesas, df_tcr, df_rmi,df_fedfunds, df_indpro, df_pce)
 
-# Se omiten variables rmi y tcr
-lista_dfs <- list(df_imae, df_ipc, df_i, df_bc, df_remesas,df_indpro, df_pce, df_fedfunds)
-
 lista_dfs_mes <- map(lista_dfs, ~ .x |> 
    mutate(fecha = lubridate::floor_date(fecha, unit = "month"))
 )
@@ -191,10 +188,7 @@ rm(lista_dfs)
 
 
 #Variables Endógenas
-zt <- ts(data[, c("bc", "i", "imae", "ipc", "remesas", "tcr", "rmi")],  start = c(2010, 1),
-         frequency = 12)
-
-zt <- ts(data[, c("imae", "ipc", "i", "bc", "remesas")],  start = c(2010, 1),
+zt <- ts(data[, c("imae", "ipc", "i", "bc", "remesas", "tcr")],  start = c(2010, 1),
          frequency = 12)
 # Variavles Exógenas
 xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency = 12)
@@ -216,17 +210,15 @@ xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency =
 # Entonces en ADF, si p-value < 0.05, rechazas H0 y concluyes que hay evidencia de estacionariedad.
 
 plot.ts(zt, main = "Dinámica Multivariada Endogenas")
-
-
 summary(ur.df(diff(zt[, "imae"]), type = "trend", lags = 12))
 
-adf.test(zt[,"bc"], k = 0) # 0.01
 adf.test(zt[,"imae"], k = 0) # 0.01
 adf.test(zt[,"ipc"], k = 0) # 0.01
 adf.test(zt[,"i"], k = 0) # 0.9647
+adf.test(zt[,"bc"], k = 0) # 0.01
+adf.test(zt[,"tcr"], k = 0) # 0.1308
 
 adf.test(diff(zt[,"i"]))#fue necesario diferenciar 0.0361
-adf.test(diff(zt[,"rmi"])) # 0.01
 adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio porcentuallog(diff())
 
 
@@ -235,15 +227,15 @@ adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio
 
 # Buscar como investigar restricciones de exclusión para forzar ceros
 
-zt_diff <- diff(zt[, c("rmi", "tcr", "i")])
+zt_diff <- diff(zt[, c("tcr", "i")])
 plot(zt_diff)
 
 zt_var <- cbind(
-  bc      = zt[-1, "bc"],
-  imaе    = zt[-1, "imae"],
-  ipc     = zt[-1, "ipc"],
-  remesas = zt[-1, "remesas"],
-  d_i     = diff(zt[, "i"])
+  imae      = zt[-1, "imae"],
+  ipc    = zt[-1, "ipc"],
+  d_i     = diff(zt[, "i"]),
+  bc = zt[-1, "bc"],
+  d_tcr     = diff(zt[, "tcr"])
 )
 
 plot(zt_var)
@@ -253,12 +245,12 @@ plot.ts(diff(xt), main = "Dinámica Multivariada")
 
 # Copias para no modificar los objetos originales
 xt_us <- xt
-zt_gt <- zt
+zt_gt <- zt_var
 
 
 # Prefijos para distinguir claramente los bloques
 colnames(xt_us) <- paste0("US_", make.names(colnames(xt)))
-colnames(zt_gt) <- paste0("GT_", make.names(colnames(zt)))
+colnames(zt_gt) <- paste0("GT_", make.names(colnames(zt_gt)))
 
 # Estados Unidos primero; Guatemala después
 Y <- na.omit(cbind(xt_us, zt_gt))

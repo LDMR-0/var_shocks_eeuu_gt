@@ -1,4 +1,4 @@
-extract_irf_data2 <- function(irf_obj) {
+extract_irf_data_2 <- function(irf_obj) {
     
     impulse_names <- names(irf_obj$irf)
     
