@@ -1,0 +1,171 @@
+---
+title: "Laboratorio 2: El Modelo VAR - Estimación y Diagnóstico"
+author: "Escribe tu nombre aquí"
+date: "Semana 1 - Día 2"
+output: 
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+rm(list=ls())
+# Cargar librerías necesarias
+library(vars)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Introducción
+
+En este laboratorio práctico exploraremos las sensibilidades del modelo VAR utilizando el dataset `Canada`, el cual contiene datos trimestrales macroeconómicos de Canadá.
+
+El objetivo es pasar de la teoría a la práctica cuestionando las decisiones de modelado: ¿Qué pasa si diferencio? ¿Cuántos rezagos elijo? ¿Importa el orden de las variables?
+
+### Carga de Datos
+
+```{r carga_datos}
+# Cargamos los datos
+data("Canada")
+
+# Vista rápida de las series
+plot.ts(Canada, main = "Series Macroeconómicas de Canadá")
+```
+
+------------------------------------------------------------------------
+
+## Ejercicio 1: El Dilema de la Estacionariedad
+
+**Instrucción:** Vamos a comparar la estabilidad de un modelo en niveles versus un modelo en diferencias.
+
+1.  Estime un VAR en niveles (`var_niveles`) con los datos originales y `p = 2`.
+2.  Cree un objeto con los datos diferenciados usando `diff()`.
+3.  Estime un VAR en diferencias (`var_diff`) con `p = 2`.
+
+<!-- end list -->
+
+```{r ejercicio_1}
+data("Canada")
+var_niveles <- VAR(Canada, p = 2, type = "const")
+# diff() funciona directo sobre objetos ts
+Canada_diff <- diff(Canada) 
+var_diff <- VAR(Canada_diff, p = 2, type = "const")
+
+# Comparar raíces
+plot(roots(var_niveles), main="Raíces en Niveles") # Puntos pegados al círculo
+plot(roots(var_diff), main="Raíces en Diferencias") # Puntos más centrados
+```
+
+**Análisis de Estabilidad:** Utilice la función `roots()` para extraer las raíces del polinomio característico de ambos modelos y grafíquelas.
+
+```{r ejercicio_1_roots}
+# Graficar raíces del modelo en niveles
+# plot(roots(...), main = "Raíces - Niveles")
+
+# Graficar raíces del modelo en diferencias
+# plot(roots(...), main = "Raíces - Diferencias")
+```
+
+> **Pregunta 1:** Observe el gráfico de las raíces del modelo en niveles. ¿Hay algún punto muy cercano o sobre el círculo unitario? ¿Qué implica esto sobre la estabilidad del modelo a largo plazo y la validez de los test estándar?
+
+------------------------------------------------------------------------
+
+## Ejercicio 2: La Batalla de los Rezagos (AIC vs SC)
+
+**Instrucción:** Utilice la función `VARselect()` para ver qué sugieren los criterios de información.
+
+```{r ejercicio_2_select}
+# Selección de rezagos
+# VARselect(Canada, lag.max = 8, type = "const")
+```
+
+1.  Estime un modelo "Complejo" usando el número de rezagos sugerido por **AIC**.
+2.  Estime un modelo "Parsimonioso" usando el número de rezagos sugerido por **SC (BIC)**.
+3.  Aplique el test de Portmanteau (`serial.test`) a ambos para ver si tienen autocorrelación en los residuos.
+
+<!-- end list -->
+
+```{r ejercicio_2_estimacion}
+# Modelo Complejo (AIC)
+# var_aic <- VAR(Canada, p = ..., type = "const")
+
+# Modelo Parsimonioso (SC)
+# var_sc <- VAR(Canada, p = ..., type = "const")
+
+# Test de Autocorrelación
+# serial.test(var_aic, lags.pt = 10, type = "PT.asymptotic")
+# serial.test(var_sc, lags.pt = 10, type = "PT.asymptotic")
+```
+
+> **Pregunta 2:** Si el modelo parsimonioso (menos rezagos) muestra un p-value \> 0.05 en el test serial, ¿vale la pena usar el modelo complejo? Justifique su respuesta basándose en el principio de parsimonia.
+
+------------------------------------------------------------------------
+
+## Ejercicio 3: El Orden de Cholesky
+
+**Instrucción:** En la identificación estructural (IRF ortogonalizada), el orden de las variables importa. R asume una estructura recursiva de izquierda a derecha (la primera columna es la más exógena).
+
+1.  Cree `datos_orden1`: Orden `prod` -\> `e` -\> `rw` -\> `U`.
+2.  Cree `datos_orden2`: Orden `U` -\> `rw` -\> `e` -\> `prod`.
+3.  Estime ambos VARs con 2 rezagos.
+
+<!-- end list -->
+
+```{r ejercicio_3_data}
+# Reordenar por nombre o índice
+datos_orden1 <- Canada[, c("prod", "e", "rw", "U")]
+datos_orden2 <- Canada[, c("U", "rw", "e", "prod")]
+
+# Al correr irf(ortho=TRUE), R usa el orden de las columnas del objeto VAR
+mod1 <- VAR(datos_orden1, p=2)
+mod2 <- VAR(datos_orden2, p=2)
+```
+
+**Comparación de Impulso-Respuesta:** Calcule la respuesta del **Empleo ('e')** ante un shock en la **Productividad ('prod')** para ambos modelos.
+
+```{r ejercicio_3_irf}
+# Comparar IRF de Prod -> Empleo
+# OJO: En mod2, Prod es la última variable, en mod1 es la primera.
+par(mfrow=c(1,2))
+plot(irf(mod1, impulse="prod", response="e", boot=FALSE), main="Prod es Exógena")
+plot(irf(mod2, impulse="prod", response="e", boot=FALSE), main="Prod es Endógena")
+```
+
+> **Pregunta 3:** Observe el periodo 0 y 1 (el impacto inicial). ¿Difiere la respuesta del empleo dependiendo de si asumimos que la productividad es exógena o endógena? ¿Por qué cree que pasa esto?
+
+------------------------------------------------------------------------
+
+## Ejercicio 4: Estabilidad Temporal (Submuestras)
+
+**Instrucción:** Vamos a ver si los coeficientes cambiaron en el tiempo. Divida la muestra en dos partes (Primera mitad y Segunda mitad).
+
+```{r ejercicio_4_split}
+n_obs <- nrow(Canada)
+mitad <- round(n_obs / 2)
+
+# Crear submuestras
+# muestra_1 <- window(Canada, end = c(start(Canada)[1] + mitad/4)) 
+# O forma más simple usando índices si no fuera objeto ts:
+# muestra_1 <- Canada[1:mitad, ]
+# muestra_2 <- Canada[(mitad + 1):n_obs, ]
+
+# Como es objeto ts, usaremos subsetting simple para este ejercicio rápido:
+m1 <- Canada[1:42, ]
+m2 <- Canada[43:84, ]
+
+# Estimar VAR para cada submuestra (p=2)
+# var_m1 <- VAR(m1, p = 2)
+# var_m2 <- VAR(m2, p = 2)
+```
+
+**Comparación de Coeficientes:** Compare la ecuación del Desempleo (`U`).
+
+```{r ejercicio_4_compare}
+# Ver resumen de coeficientes
+# summary(var_m1)$varresult$U
+# summary(var_m2)$varresult$U
+```
+
+> **Pregunta 4:** Mire el coeficiente del primer rezago del Desempleo (`U.l1`). ¿Es similar en magnitud y signo en ambos periodos? ¿Sería confiable usar el modelo completo para predecir crisis si los parámetros son inestables?

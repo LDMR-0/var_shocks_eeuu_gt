@@ -1,0 +1,57 @@
+---
+title: "Transmisión de shocks Estados Unidos a la economía Guatemalteca"
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
+---
+
+
+$$
+z_t = c + Az_{zt-1} + B x_t + u_t
+$$
+donde:
+$z_t$ es un vector con las variables guatemaltecas:
+
+$$
+  z_t = \begin{bmatrix}
+    bc_t  \\
+    image_t \\
+    ipc_t \\
+    i_t \\
+    rmi_t \\
+    tcr_t
+  \end{bmatrix}
+$$
+
+considerando las siguientes variables:
+
+bc = balanza comercial
+
+$$
+  bc_t = \frac{X_t}{M_t}
+$$
+tcr: tipo de cambio bilateral:
+
+$$
+tcr_t = E_t \frac{P_{t}^{US}}{P_t^{GT}}
+$$
+
+$x_t$ es un vector con las variables estadounidenses que se tomarán como exógenas
+dado que las variables estadounidenses si afectan las a las guatemaltecas pero no 
+al revés.
+
+$$
+  zt = \begin{bmatrix}
+    indpro_t \\
+    pce_t \\
+    fedfund_t
+  \end{bmatrix}
+$$
+ 
+Cada variable estadounidense representa un tipo de shock:
+
+* indpro de oferta
+* pce de demanda
+* fedfund monetario
