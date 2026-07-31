@@ -1,0 +1,18 @@
+---
+title: "Transmisión de choques de demanda, oferta y política monetaria de Estados Unidos hacia Guatemala: evidencia de un modelo estructural con bloques exógenos, 2010–2025"
+author: "Luis Daniel Monroy Rojas"
+date: Septiembre 2026
+date-format: "long"
+format:
+  typst:
+    mainfont: "Times New Roman"
+    papersize: "us-letter"
+    margin:
+        x: 1in
+        y: 1in
+    toc: false
+    section-numbering: 1.1.a
+    columns: 2
+---
+
+# Introducción

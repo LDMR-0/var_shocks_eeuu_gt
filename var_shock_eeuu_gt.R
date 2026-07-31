@@ -73,7 +73,7 @@ rm(df_temp)
 df_ipc <- read_excel("input/ipc.xlsx", sheet = 2)
 df_ipc <- df_ipc |> 
   mutate(fecha = as.Date(PERIODO)) |>
-  dplyr::rename(ipc = 3) |>
+  dplyr::rename(ipc = 4) |>
   dplyr::select(fecha, ipc)
   
 
@@ -218,6 +218,7 @@ adf.test(zt[,"i"], k = 0) # 0.9647
 adf.test(zt[,"bc"], k = 0) # 0.01
 adf.test(zt[,"tcr"], k = 0) # 0.1308
 
+adf.test(diff(zt[,"ipc"]))
 adf.test(diff(zt[,"i"]))#fue necesario diferenciar 0.0361
 adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio porcentuallog(diff())
 
@@ -227,7 +228,7 @@ adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio
 
 # Buscar como investigar restricciones de exclusión para forzar ceros
 
-zt_diff <- diff(zt[, c("tcr", "i")])
+zt_diff <- diff(zt[, c("tcr", "i", "ipc")])
 plot(zt_diff)
 
 zt_var <- cbind(
@@ -243,19 +244,28 @@ plot.ts(xt, main = "Dinámica Multivariada Exogenas")
 plot.ts(diff(xt), main = "Dinámica Multivariada")
 
 
+adf.test(xt[,"indpro"], k = 0) # 0.0498
+adf.test(xt[,"pce"], k = 0) # 0.03656
+adf.test(xt[,"fedfunds"], k = 0) # 9223
+
+
 # Copias para no modificar los objetos originales
-xt_us <- xt
+xt_us <- cbind(
+  indpro = xt[-1, "indpro"],
+  pce = xt[-1, "pce"],
+  d_fedfunds = diff(xt[, "fedfunds"])
+)
 zt_gt <- zt_var
 
 
 # Prefijos para distinguir claramente los bloques
-colnames(xt_us) <- paste0("US_", make.names(colnames(xt)))
+colnames(xt_us) <- paste0("US_", make.names(colnames(xt_us)))
 colnames(zt_gt) <- paste0("GT_", make.names(colnames(zt_gt)))
 
 # Estados Unidos primero; Guatemala después
 Y <- na.omit(cbind(xt_us, zt_gt))
 
-us_names <- paste(colnames(xt_us))
+us_names <- colnames(xt_us)
 gt_names <- colnames(zt_gt)
 
 
@@ -275,7 +285,6 @@ seleccion <- VARselect(
 )
 p_optimo <- as.integer(seleccion$selection["SC(n)"])
 p_optimo
-
 # TIP:
 # AIC tiende a sobreestimar p (menos parsimonioso).
 # SC (BIC) tiende a subestimar p (mejor para inferencia/parsimonia).
@@ -358,8 +367,6 @@ irf_us_gt <- irf(
   boot = FALSE
 )
 
-plot(irf_us_gt)
-
 
 
 # ------------------------------------------------------------------------------
@@ -367,15 +374,12 @@ plot(irf_us_gt)
 # ------------------------------------------------------------------------------
 # Estimación del modelo VAR con la librería
 # var_model <- VAR(var_data, p = 12, type = "const")
-
-
-
-varx_model <- VAR(y = zt, exogen = xt, p = 12, type = "const")
+# varx_model <- VAR(y = zt, exogen = xt, p = 12, type = "const")
 
 
 
 # Muestra las ecuaciones individuales. Explicar R-cuadrado y significancia.
-summary(varx_model)
+summary(var_bloques)
 
 # ------------------------------------------------------------------------------
 # 4. Diagnóstico del Modelo (Validación)
@@ -389,7 +393,7 @@ summary(varx_model)
 # tengan un módulo menor a 1. 
 
 # Esta función devuelve los eigenvalores de la matriz de la forma acompañante. 
-roots(varx_model) 
+roots(var_bloques) 
 
 # B. Autocorrelación serial en los residuos (Portmanteau Test)
 
@@ -401,11 +405,11 @@ roots(varx_model)
 # general way, rather than specifying a precise form of inadequacy. 
 
 # H0: No hay autocorrelación serial
-serial_test <- serial.test(varx_model, lags.pt = 12, type = "PT.asymptotic")
+serial_test <- serial.test(var_bloques, lags.pt = 12, type = "PT.asymptotic")
 serial_test
 
 # C. Normalidad de los residuos
-norm_test <- normality.test(varx_model)
+norm_test <- normality.test(var_bloques)
 norm_test
 
 
@@ -420,9 +424,6 @@ granger_cause <- causality(varx_model, cause = "bc")
 granger_cause
 
 #1. Calcular IRF para todas las combinaciones
-irf_all <- irf(varx_model, n.ahead = 10, boot = TRUE)
-
-
 irf_us_gt <- irf(
   var_bloques,
   impulse = us_names,
@@ -436,7 +437,7 @@ irf_us_gt <- irf(
   var_bloques,
   impulse = us_names,
   response = gt_names,
-  n.ahead = 24,
+  n.ahead = 12,
   ortho = TRUE,
   boot = TRUE,
   runs = 500,
@@ -444,15 +445,14 @@ irf_us_gt <- irf(
 )
 
 
-plot(irf_all)
+plot(irf_us_gt)
 # 2. Extraer datos y convertir a formato largo (Tidy)
 # Función para extraer datos de IRF
 source("fn_IRF.R")
 source("fn_IRF_2.R")
 
 # Extraer IRFs como un dataframe
-irf_df <- extract_irf_data(irf_all)
-irf_df <- extract_irf_data2(irf_us_gt)
+irf_df <- extract_irf_data_2(irf_us_gt)
 plot(irf_us_gt)
 
 # 3. Graficar matriz
