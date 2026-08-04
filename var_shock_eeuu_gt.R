@@ -405,7 +405,7 @@ roots(var_bloques)
 # general way, rather than specifying a precise form of inadequacy. 
 
 # H0: No hay autocorrelación serial
-serial_test <- serial.test(var_bloques, lags.pt = 12, type = "PT.asymptotic")
+serial_test <- serial.test(var_bloques, lags.pt = 1, type = "PT.asymptotic")
 serial_test
 
 # C. Normalidad de los residuos
@@ -437,7 +437,7 @@ irf_us_gt <- irf(
   var_bloques,
   impulse = us_names,
   response = gt_names,
-  n.ahead = 12,
+  n.ahead = 24,
   ortho = TRUE,
   boot = TRUE,
   runs = 500,
@@ -463,11 +463,55 @@ ggplot(irf_df, aes(x = Period, y = Value)) +
   facet_grid(Response ~ Impulse, scales = "free_y", switch = "y") +
   labs(title = "Matriz de Funciones Impulso-Respuesta",
        subtitle = "Columnas: Shock (Impulso) | Filas: Variable de Respuesta",
-       x = "Periodos", y = NULL) +
+       x = "Períodos", y = NULL) +
   theme_bw() +
   theme(strip.background = element_rect(fill = "#ecf0f1"),
         strip.text = element_text(face = "bold"))
 
+
+
+# Función para limpiar los nombres mostrados en los facets
+limpiar_nombre <- function(x) {
+  x <- sub("^xt_us\\.", "", x)
+  x <- sub("^zt_gt\\.", "", x)
+  x
+}
+
+ggplot(irf_df, aes(x = Period, y = Value)) +
+  geom_ribbon(
+    aes(ymin = Lower, ymax = Upper),
+    fill = "#3498db",
+    alpha = 0.2
+  ) +
+  geom_line(
+    color = "#2c3e50",
+    linewidth = 0.8
+  ) +
+  geom_hline(
+    yintercept = 0,
+    color = "red",
+    linetype = "dashed"
+  ) +
+  facet_grid(
+    Response ~ Impulse,
+    scales = "free_y",
+    switch = "y",
+    labeller = labeller(
+      Impulse = limpiar_nombre,
+      Response = limpiar_nombre
+    )
+  ) +
+  labs(
+    title = "Matriz de Funciones Impulso-Respuesta",
+    subtitle = "Columnas: Shock (Impulso) | Filas: Variable de respuesta",
+    x = "Períodos",
+    y = NULL
+  ) +
+  theme_bw() +
+  theme(
+    strip.background = element_rect(fill = "#ecf0f1"),
+    strip.text = element_text(face = "bold")
+  )
 
 # C. Descomposición de Varianza (FEVD)
 
