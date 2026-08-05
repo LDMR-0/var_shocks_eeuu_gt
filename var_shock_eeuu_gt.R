@@ -104,8 +104,8 @@ df_i <- df_i |>
 # ------------------------------------------------------------------------------
 df_tcr <- read_excel("input/construccion_tcr_bilateral.xlsx", sheet = 2)
 df_tcr <- df_tcr |>
-  dplyr::rename(tcr = 5) |>
-  dplyr::select(fecha, tcr)
+  dplyr::rename(tc = 2) |>
+  dplyr::select(fecha, tc)
 # ==============================================================================
 # Datos de economía extranjeta (EE.UU.)
 # ==============================================================================
@@ -188,7 +188,7 @@ rm(lista_dfs)
 
 
 #Variables Endógenas
-zt <- ts(data[, c("imae", "ipc", "i", "bc", "remesas", "tcr")],  start = c(2010, 1),
+zt <- ts(data[, c("imae", "ipc", "i", "bc", "remesas", "tc")],  start = c(2010, 1),
          frequency = 12)
 # Variavles Exógenas
 xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency = 12)
@@ -216,7 +216,7 @@ adf.test(zt[,"imae"], k = 0) # 0.01
 adf.test(zt[,"ipc"], k = 0) # 0.01
 adf.test(zt[,"i"], k = 0) # 0.9647
 adf.test(zt[,"bc"], k = 0) # 0.01
-adf.test(zt[,"tcr"], k = 0) # 0.1308
+adf.test(zt[,"tc"], k = 0) # 0.024
 
 adf.test(diff(zt[,"ipc"]))
 adf.test(diff(zt[,"i"]))#fue necesario diferenciar 0.0361
@@ -228,7 +228,7 @@ adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio
 
 # Buscar como investigar restricciones de exclusión para forzar ceros
 
-zt_diff <- diff(zt[, c("tcr", "i", "ipc")])
+zt_diff <- diff(zt[, c("tc", "i", "ipc")])
 plot(zt_diff)
 
 zt_var <- cbind(
@@ -236,7 +236,7 @@ zt_var <- cbind(
   ipc    = zt[-1, "ipc"],
   d_i     = diff(zt[, "i"]),
   bc = zt[-1, "bc"],
-  d_tcr     = diff(zt[, "tcr"])
+  tc     = zt[-1, "tc"]
 )
 
 plot(zt_var)
@@ -517,7 +517,7 @@ ggplot(irf_df, aes(x = Period, y = Value)) +
 
 # ¿Qué porcentaje de la varianza del error de pronóstico de 'Empleo'
 # se debe a sí mismo vs. a shocks en 'Prod' o 'Salarios'?
-fevd_model <- fevd(varx_model, n.ahead = 10)
+fevd_model <- fevd(var_bloques, n.ahead = 10)
 dev.off()
 plot(fevd_model)
 
@@ -536,5 +536,13 @@ dev.off()
 # Ver los valores numéricos
 print(fevd_model$e)
 
+
+plot(
+  fevd_model,
+  plot.type = "multiple",
+  nc = 2,
+  xlab = "Meses",
+  ylab = "Proporción de la varianza"
+)
 
 
