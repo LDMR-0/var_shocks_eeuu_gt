@@ -1,18 +1,173 @@
 ---
 title: "Transmisión de choques de demanda, oferta y política monetaria de Estados Unidos hacia Guatemala: evidencia de un modelo estructural con bloques exógenos, 2010–2025"
+
 author: "Luis Daniel Monroy Rojas"
-date: Septiembre 2026
+date: "2026-09-01"
 date-format: "long"
+
+abstract: |
+  Este estudio analiza la transmisión de shocks de oferta, demanda y
+  política monetaria originados en Estados Unidos hacia la economía
+  guatemalteca. Para ello, se estima un modelo de vectores autorregresivos
+  con información mensual. Los resultados se evalúan mediante funciones
+  impulso-respuesta y descomposición de la varianza del error de pronóstico.
+
+keywords:
+  - política monetaria
+  - shocks externos
+  - modelo VAR
+  - funciones impulso-respuesta
+  - Guatemala     
+
 format:
   typst:
-    mainfont: "Times New Roman"
-    papersize: "us-letter"
-    margin:
-        x: 1in
-        y: 1in
     toc: false
-    section-numbering: 1.1.a
-    columns: 2
+    columns: 1
+    section-numbering: 1.1.1
+
+citeproc: true
+bibliography: references.bib
+csl: https://www.zotero.org/styles/apa-with-abstract
 ---
 
-# Introducción
+{{< pagebreak >}}
+
+
+# Marco Referencial
+
+## Antecedentes
+La literatura macroeconómica internacional ha documentado ampliamente cómo se transmiten shocks en economías avanzadas hacia economías emergentes dado que estas perturbaciones pueden tener implicaciones en la estabilidad y el crecimiento de estas economías pequeñas y abiertas. Principalmente se ha estudiado la relevancia de identificar los canales por los cuales se propagan estos efectos incluyendo redes de producción, comercio y mercados financieros. Respecto a este último, @Dornbusch2000Contagion sostienen que debido al desarrollo y la integración de mercados de capitales el canal financiero se ha convertido en la vía con mayor impacto y velocidad de propagación.
+
+A nivel empírico, un enfoque común ha sido el uso de modelos vectores autorregresivos VAR para identificar y cuantificar el impacto de distintos tipos de shocks sobre variables macroeconómicas, dentro y entre países. En este marco el estudio de @Canova2005The sirve de referencia clave para América Latina, mostrando como shocks monetarios de Estados Unidos sí tienen efectos significativos sobre las economías latinoamericanas, mientras que shocks reales de demanda y de oferta tienen efectos reducidos o estadísticamente no significativos, un hallazgo consistente con la importancia del canal financiero que menciona @Dornbusch2000Contagion
+
+Adicionalmente, @Canova2005The encuentra que el canal financiero, particularmente a través de tasas de interés y flujos de capital, es el principal mecanismo de transmisión de estos shocks, superando en relevancia al canal comercial. Asimismo, el estudio evidencia que una proporción importante de la volatilidad macroeconómica en América Latina puede explicarse por perturbaciones externas, lo que sugiere la existencia de un componente común en los ciclos económicos de la región. Estos hallazgos son consistentes con la evidencia teórica sobre la creciente importancia de la integración financiera internacional y refuerzan la necesidad de considerar factores externos en el análisis macroeconómico de economías emergentes.
+
+Los shocks que afectan a la economía de Estados Unidos también tienen efectos relevantes sobre la economía guatemalteca debido a la estrecha interdependencia ambos países, manifestándose principalmente a través del comercio y de manera creciente, mediante el flujo de remesas, el cual ha adquirido una importancia significativa en la estructura macroeconómica del país principalmente en los últimos años. En particular, las remesas representan una fuente importante de ingresos externos para los hogares y una proporción considerable en del PIB. A cuenta de eso, @CastanedaFuentes2018Emigrant señalan el aumento sostenido de las remesas puede generar una apreciación del tipo de cambio real, mediante un incremento de la demanda interna, particularmente de bienes no transables, lo que produce un desplazamiento de recursos del sector transable al no transable lo que elevaría los precios relativos.
+
+## Marco Contextual
+La economía guatemalteca se inserta en un entorno internacional caracterizado por una elevada interdependencia macroeconómica, en el cual las perturbaciones originadas en economías avanzadas pueden transmitirse hacia economías pequeñas y abiertas mediante distintos canales, en ese contexto, la literatura para América Latina y otras economías emergentes ha mostrado que los shocks de Estados Unidos pueden afectar el producto, la inflación, las tasas de interés y las condiciones externas de los países receptores. En particular, Canova (2005) encuentra que los shocks de Estados Unidos explican una porción importante de la variabilidad macroeconómica en América Latina y que los shocks monetarios tienen efectos más significativos que los shocks reales, con predominio del canal financiero. De forma complementaria, @DeSimone2024The muestra que en pequeñas economías abiertas la política monetaria de Estados Unidos incide de manera importante sobre la actividad económica, la inflación y las tasas de interés, en un contexto donde los canales financieros adquieren creciente relevancia.
+
+En este contexto general, Guatemala presenta características que hacen especialmente relevante el estudio de la transmisión de shocks externos. Se trata de una economía pequeña y abierta, estrechamente vinculada a Estados Unidos no solo por el comercio exterior, sino también por el flujo de remesas y la disponibilidad de divisas, factores que condicionan su desempeño macroeconómico. Esta relación estructural implica que variaciones en la demanda agregada estadounidense pueden reflejarse en cambios en las exportaciones guatemaltecas, en el ingreso de los migrantes y, por esa vía, en los flujos de remesas, así como en presiones sobre el mercado cambiario y las reservas internacionales.
+
+El canal de remesas resulta particularmente importante para el caso guatemalteco. @CastanedaFuentes2018Emigrant muestran que las remesas han aumentado de manera sustancial como proporción del PIB y que este proceso ha coincidido con una apreciación del tipo de cambio real. En esa investigación mediante un modelo DSGE calibrado para Guatemala, encuentran que un incremento sostenido de remesas puede generar una apreciación del tipo de cambio real, una contracción del sector transable y una expansión del sector no transable, lo que sugiere que en Guatemala las remesas no son solo una fuente de ingreso para los hogares, sino también un mecanismo macroeconómico de transmisión de shocks externos.
+
+El contraste de la literatura previa muestra diferencias importantes en enfoques, metodologías y resultados. @Canova2005The emplea un VAR estructural para un conjunto de países latinoamericanos y se concentra en distinguir distintos tipos de shocks externos y sus efectos promedio sobre la región. @DeSimone2024The utiliza un SFAVAR con una base amplia de datos para pequeñas economías abiertas y enfatiza la relevancia de los canales financieros y del ciclo financiero global. Por su parte, @CastanedaFuentes2018Emigrant desarrollan un DSGE calibrado para Guatemala, enfocado específicamente en el canal de remesas y su impacto sobre el tipo de cambio real y la estructura sectorial. Estos estudios aportan elementos fundamentales, pero aún dejan un vacío en el cual no se ha integrado el caso guatemalteco considerando simultáneamente exportaciones, remesas e inflación.
+
+## Marco Teórico
+
+La presente investigación se sustenta en la teoría de la macroeconomía abierta, la cual establece que las economías pequeñas y abiertas se encuentran expuestas a perturbaciones originadas en el entorno internacional. En este marco, los shocks provenientes de economías grandes pueden transmitirse a través de distintos canales, afectando variables internas como el producto, la inflación, el sector externo y las condiciones financieras. Esta idea parte del concepto de interdependencia macroeconómica internacional, según el cual la creciente integración comercial y financiera amplifica la sensibilidad de las economías emergentes frente a cambios en las condiciones externas.
+
+Desde el punto de vista teórico, los modelos de economía abierta, especialmente la tradición de Mundell-Fleming, ofrecen una base conceptual para entender cómo se propagan estos shocks. En una economía pequeña y abierta, cambios en el ingreso externo, en la demanda por exportaciones o en las tasas de interés internacionales pueden modificar la absorción interna, el equilibrio externo y los precios relativos. En esta línea, @DeSimone2024The sostiene que, bajo apertura comercial y movilidad de capital, las perturbaciones originadas en Estados Unidos pueden transmitirse mediante canales de absorción, tipo de cambio y condiciones financieras, con efectos relevantes sobre la actividad y la inflación en economías pequeñas y abiertas.
+
+Sin embargo, la literatura regional no puede trasladarse automáticamente al caso guatemalteco. Guatemala comparte con otras economías emergentes su condición de economía pequeña y abierta, pero presenta características particulares que hacen necesario un análisis específico. Entre ellas destacan su estrecha vinculación con Estados Unidos, tanto por comercio como por migración, así como la elevada importancia de las remesas dentro de su estructura macroeconómica. En este sentido, la transmisión de shocks externos no solo puede operar por la vía comercial o financiera tradicional, sino también a través del ingreso de remesas.
+
+Este último canal ha sido estudiado para Guatemala por @CastanedaFuentes2018Emigrant, quienes desarrollan un modelo DSGE y muestran que un aumento sostenido de remesas puede apreciar el tipo de cambio real, reducir la competitividad externa y desplazar recursos desde el sector transable hacia el sector no transable, en una dinámica similar a la enfermedad holandesa, “duch disease”. Los autores encuentran además que la trayectoria observada de la economía guatemalteca es más consistente con un aumento percibido como permanente en las remesas, lo cual refuerza la relevancia macroeconómica de este canal.
+
+A pesar de estos avances, persiste un vacío en la literatura, primero porque la evidencia para América Latina se concentrado en el efecto promedio de shocks externos, sin incluir la especificidad del caso guatemalteco, y segundo que la literatura para Guatemala ha enfatizado el vínculo entre remesas y tipo de cambio real, pero no se ha integrado este canal dentro de un análisis dinámico de transmisión de shocks de demanda originados en Estados Unidos. En este contexto, la presente tesis busca aportar a la literatura al estudiar cómo se transmiten los shocks de demanda agregada de Estados Unidos hacia la economía guatemalteca, identificando su efecto dinámico sobre exportaciones, remesas, inflación y reservas internacionales mediante un modelo VAR.
+
+# Planteamiento del Problema
+
+## Pregunta de Investigación
+
+¿Cuál es la magnitud, dirección y persistencia de la respuesta de la razón de exportaciones a importaciones, la tasa líder de política monetaria, la actividad económica, la inflación y el tipo de cambio nominal de Guatemala ante choques estructurales de demanda, oferta y política monetaria originados en Estados Unidos durante el período 2010–2025?
+
+¿Cuál es la magnitud, dirección y persistencia de la respuesta del Índice Mensual de la Actividad Económica, la inflación, la razón de exportaciones a importaciones, la tasa líder de política monetaria y el tipo de cambio nominal de Guatemala ante choques estructurales de oferta, demanda y política monetaria identificados dentro del bloque macroeconómico de Estados Unidos durante el período 2010–2025?
+
+
+## Objetivos
+
+### Objetivo General
+Estimar, mediante un modelo VAR por bloques con identificación estructural, la magnitud, dirección y persistencia de la respuesta de la actividad económica, la inflación y las variables comerciales, monetarias y cambiarias de Guatemala ante choques de demanda, oferta y política monetaria originados en Estados Unidos durante el período 2010–2025.
+
+
+### Objetivos Específicos
+
+1. Especificar y estimar un modelo VAR estructural por bloques que incorpore las variables macroeconómicas de Estados Unidos y Guatemala, imponiendo la exogeneidad del bloque estadounidense respecto de la economía guatemalteca.
+
+2. Identificar, dentro del bloque macroeconómico de Estados Unidos, choques estructurales de oferta, demanda y política monetaria mediante restricciones de signo fundamentadas en la teoría económica.
+
+3. Estimar la respuesta dinámica del Índice Mensual de la Actividad Económica y de la inflación de Guatemala ante cada tipo de choque estructural estadounidense.
+
+4. Estimar la respuesta de la razón de exportaciones a importaciones, la tasa líder de política monetaria y el tipo de cambio nominal de Guatemala ante los choques identificados en el bloque estadounidense.
+
+5. Comparar la dirección, la magnitud máxima, el efecto acumulado y la persistencia de las respuestas de las variables guatemaltecas ante los choques de oferta, demanda y política monetaria.
+
+6. Determinar la importancia relativa de cada choque estadounidense en la variabilidad de las variables macroeconómicas de Guatemala mediante la descomposición de la varianza del error de pronóstico.
+
+Opcionales:
+
+7. Evaluar la estabilidad temporal del modelo y la sensibilidad de las respuestas estimadas a la inclusión del período asociado con la pandemia de COVID-19.
+
+8. Evaluar la robustez de los resultados ante estrategias alternativas de identificación, transformaciones de las variables, números de rezagos y medidas de política monetaria estadounidense.
+
+## Hipótesis Principal $H_1$
+
+Los choques estructurales de oferta, demanda y política monetaria originados en Estados Unidos no generan respuestas dinámicas estadísticamente significativas en la actividad económica, la inflación, la razón de exportaciones a importaciones, la tasa líder de política monetaria ni el tipo de cambio nominal de Guatemala durante el período 2010–2025.
+
+## Hipótesis Nula $H_0$
+
+Los choques estructurales de oferta, demanda y política monetaria originados en Estados Unidos no generan respuestas estadísticamente significativas en las principales variables macroeconómicas de Guatemala durante el período 2010–2025.
+
+## Variables
+
+### Variables de Estados Unidos
+
+1. **Tasa de política monetaria de Estados Unidos (FedFunds):** representa cambios inesperados en la postura de política monetaria de la Reserva Federal, medidos a través de la tasa de interés de referencia (Federal Funds Rate), esta variable se utilizará como proxy de un shock de política monetaria.
+
+2. **Producción industrial de Estados Unidos (INDPRO):** representa variaciones en la actividad productiva de la economía estadounidense, medidas a través del índice de producción industrial. Esta variable se utilizará como proxy de un shock de oferta agregada.
+
+3.	**Gasto en consumo personal de Estados Unidos (PCE):** representa cambios en la demanda agregada de la economía estadounidense, medidos a través del gasto en consumo personal (Personal Consumption Expenditures). Esta variable se utilizará como proxy de un shock de demanda agregada.
+
+### Variables de Guatemala
+
+1.	**Índice Mensual de Actividad Económica (IMAE):** representa la evolución de la actividad económica de corto plazo en Guatemala, medido a través del índice mensual de actividad económica. Esta variable se utilizará como proxy del nivel de producción o actividad económica.
+
+2.	**Inflación de Guatemala(IPC):** variación interanual del nivel general de precios, calculada a partir del Índice de Precios al Consumidor. Permite analizar la transmisión de los choques externos hacia los precios internos.
+
+3. **Razón de exportaciones a importaciones (BC):** relación entre el valor de las exportaciones y las importaciones guatemaltecas. Se utiliza como indicador de la posición comercial relativa y del canal de transmisión comercial. Un aumento representa una mejora de las exportaciones en relación con las importaciones.
+
+4. **Tasa líder de política monetaria (i):** tasa de interés de referencia establecida por el Banco de Guatemala. Representa la respuesta de la política monetaria nacional ante cambios en la actividad, la inflación y las condiciones externas.
+
+5. **Tipo de Cambio Nominal:** precio del dólar estadounidense expresado en quetzales. Se utiliza para analizar el canal cambiario y determinar si los choques externos generan presiones de apreciación o depreciación sobre la moneda guatemalteca.
+
+## Alcance y Límites
+
+### Alcance
+
+La presente investigación tiene como alcance analizar la transmisión de shocks de demanda, oferta y política monetaria de Estados Unidos hacia la economía guatemalteca mediante un modelo de vectores autorregresivos (VAR). A través de este enfoque, el estudio permite identificar y cuantificar los efectos dinámicos de estos shocks externos sobre variables macroeconómicas principales, como la actividad económica, la inflación, el tipo de cambio nominal, las reservas y la balanza comercial. Asimismo, se busca evaluar la importancia relativa de cada tipo de shock mediante herramientas como funciones de impulso-respuesta y descomposición de varianza, lo que facilita comprender los principales canales de transmisión hacia la economía guatemalteca.
+
+En términos de cobertura temporal, la investigación se desarrolla utilizando datos mensuales para el período comprendido entre enero de 2010 y diciembre de 2025. Este rango permite capturar la dinámica de corto y mediano plazo de las variables analizadas, incluyendo distintos contextos macroeconómicos, como episodios de estabilidad, cambios en las condiciones financieras internacionales y choques globales recientes. De esta manera, el estudio aporta evidencia empírica relevante sobre la sensibilidad de la economía guatemalteca frente a perturbaciones externas en un entorno contemporáneo.
+
+### Límites
+A pesar de los aportes del estudio, existen algunas limitaciones que deben ser consideradas. En primer lugar, el análisis se basa en un modelo VAR, el cual, aunque es adecuado para capturar relaciones dinámicas entre variables, depende de supuestos específicos para la identificación de shocks estructurales. En este sentido, la utilización de variables proxy para representar shocks de demanda, oferta y política monetaria implica que estos no capturan de manera perfecta todas las perturbaciones reales de la economía estadounidense, lo que puede influir en la precisión de los resultados.
+
+Adicionalmente, la investigación se limita al período comprendido entre 2010 y 2025, por lo que no incorpora episodios históricos anteriores que podrían presentar dinámicas distintas en la transmisión de shocks externos. Asimismo, el análisis se centra exclusivamente en shocks provenientes de Estados Unidos y en variables macroeconómicas agregadas de Guatemala, dejando fuera otros posibles factores externos relevantes, así como efectos sectoriales o regionales dentro de la economía. Estas restricciones no invalidan los resultados, pero delimitan el alcance de las conclusiones obtenidas.
+
+## Metodología de la Investigación
+
+### Enfoque de la Investigación
+
+La investigación adopta un enfoque cuantitativo econométrico basado en el análisis de series de tiempo mensuales para el período 2010–2025, utilizando datos del Banco de Guatemala y de la Reserva Federal. Se emplea un modelo VAR para analizar la transmisión de shocks externos de Estados Unidos hacia variables macroeconómicas de Guatemala.
+
+### Tipo de Investigación
+
+El presente estudio es de tipo explicativo–causal. Es explicativo, ya que busca analizar cómo los shocks de demanda, oferta y política monetaria de Estados Unidos se transmiten hacia la economía guatemalteca, identificando sus efectos sobre variables macroeconómicas clave.
+
+Asimismo, es de carácter causal, en la medida en que pretende estimar el impacto de estos shocks externos sobre la dinámica de la economía guatemalteca, utilizando un modelo de vectores autorregresivos (VAR) que permite analizar relaciones dinámicas entre variables y aproximar efectos causales a partir de la identificación de shocks estructurales.
+
+### Sujeto de Investigación y Unidad de Análisis
+
+El sujeto de investigación en este caso es la economía guatemalteca en su dimensión macroeconómica.
+La unidad de análisis corresponde a observaciones mensuales de las variables macroeconómicas de Guatemala y de Estados Unidos para el período 2010–2025, lo que permite estudiar la dinámica temporal de la transmisión de shocks externos.
+
+
+### Población y muestra
+La población de estudio está conformada por todas las observaciones temporales de las variables macroeconómicas relevantes de la economía guatemalteca y estadounidense, en frecuencia mensual, que permiten analizar la transmisión de shocks externos.
+
+La muestra está constituida por observaciones mensuales correspondientes al período comprendido entre enero de 2010 y diciembre de 2025, seleccionadas en función de la disponibilidad y consistencia de la información.
+
+### Método
+
+El análisis de los datos se realizará mediante un modelo estructural de vectores autoregresivos por bloques, compuesto por un bloque macroeconómicode Estados Unidos y otro correspondiente a Guatemala, considerando a este último como una economía pequeña y abierta, se impondran restricciones de exogeneidad por bloques, de forma que las variables guatemaltecas no afecten contempráneamente ni mediante sus rezagos a las variables estadounidense, mientras que las perturbaciones originadas en Estados Unidos podrán transmitirse hacia Guatemala.
+
+Dentro del bloque estadounidense se identificarán choques estructurales de oferta, demanda y política monetaria mediante restricciones de signo fundamentadas en la teoría ecónomica y posteriormente se estimarán las funciones dinámicas de las variables guatemaltecas mediante funciones impulso-respuesta y se determinará la importancia relativa de cada choque mediantela descomposición de la varianza.
