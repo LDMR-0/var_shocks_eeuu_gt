@@ -14,8 +14,8 @@ seleccion <- VARselect(
 )
 seleccion$selection
 
-# p_optimo <- as.integer(seleccion$selection["SC(n)"])
-p_optimo <- as.integer(seleccion$selection["AIC(n)"])
+p_optimo <- as.integer(seleccion$selection["SC(n)"])
+# p_optimo <- as.integer(seleccion$selection["AIC(n)"])
 p_optimo
 # TIP:
 # AIC tiende a sobreestimar p (menos parsimonioso).

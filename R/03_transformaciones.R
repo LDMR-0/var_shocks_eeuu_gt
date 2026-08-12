@@ -1,13 +1,6 @@
 
-# Preparar la data que se usara en el modelo VAR
-data <- reduce(lista_dfs_mes, inner_join, by = "fecha")
-rm(lista_dfs_mes)
-rm(lista_dfs)
-
-
 #Variables Endógenas
-zt <- ts(data[, c("imae", "ipc", "i", "bc", "remesas", "tc")],  start = c(2010, 1),
-         frequency = 12)
+zt <- ts(data[, c("i", "tc", "imae", "ipc", "bc")],  start = c(2010, 1), frequency = 12)
 # Variavles Exógenas
 xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency = 12)
 
@@ -30,14 +23,61 @@ xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency =
 plot.ts(zt, main = "Dinámica Multivariada Endogenas")
 summary(ur.df(diff(zt[, "imae"]), type = "trend", lags = 12))
 
-adf.test(zt[,"imae"], k = 0) # 0.01
-adf.test(zt[,"ipc"], k = 0) # 0.01
-adf.test(zt[,"i"], k = 0) # 0.9647
+adf.test(zt[,"imae"], k = 12) # 0.01
+adf.test(zt[,"ipc"], k = 12) # 0.5298
+adf.test(zt[,"i"], k = 12) # 0.9647
 adf.test(zt[,"bc"], k = 0) # 0.01
-adf.test(zt[,"tc"], k = 0) # 0.024
+adf.test(zt[,"tc"], k = 1) # 0.5766
 
-adf.test(diff(zt[,"ipc"]))
-adf.test(diff(zt[,"i"]))#fue necesario diferenciar 0.0361
+adf_i <- ur.df(
+  diff(zt[, "i"]),
+  type = "drift",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_i)
+
+adf_imae <- ur.df(
+  diff(log(zt[, "imae"])),
+  type = "trend",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_imae)
+
+adf_imae <- ur.df(
+  diff(log(zt[, "imae"])),
+  type = "trend",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_imae)
+
+adf_ipc <- ur.df(
+  diff(log(zt[, "ipc"])),
+  type = "drif",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_ipc)
+
+
+
+
+
+adf_bc <- ur.df(
+  diff(log(zt[,"bc"])),
+  type = "drift",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_bc)
+
+
+
+adf.test(log(zt[,"inflacion"])) 
+adf.test(diff(log(zt[,"i"])))#fue necesario diferenciar 0.03614
+adf.test(diff(zt[,"tc"])) 
 # adf.test(diff(zt[,"tcr"])) # usar diferencia de log para interpretar como cambio porcentuallog(diff())
 
 
@@ -46,15 +86,15 @@ adf.test(diff(zt[,"i"]))#fue necesario diferenciar 0.0361
 
 # Buscar como investigar restricciones de exclusión para forzar ceros
 
-zt_diff <- diff(zt[, c("tc", "i", "ipc")])
-plot(zt_diff)
+zt_diff <- diff(zt[, c("tc", "i", "inflacion")])
+# plot(zt_diff)
 
 zt_var <- cbind(
-  imae      = zt[-1, "imae"],
-  ipc    = zt[-1, "ipc"],
-  d_i     = diff(zt[, "i"]),
-  bc = zt[-1, "bc"],
-  tc     = zt[-1, "tc"]
+  dlog_imae = diff(log(zt[, "imae"])),
+  dlog_ipc = diff(log(zt[,"ipc"])),
+  d_i = diff(zt[,"i"]),
+  dlog_bc = diff(log(zt[,"bc"])),
+  tc = zt[-1,"tc"]
 )
 
 plot(zt_var)
@@ -62,19 +102,53 @@ plot.ts(xt, main = "Dinámica Multivariada Exogenas")
 plot.ts(diff(xt), main = "Dinámica Multivariada")
 
 
-adf.test(xt[,"indpro"], k = 0) # 0.0498
-adf.test(xt[,"pce"], k = 0) # 0.03656
-adf.test(xt[,"fedfunds"], k = 0) # 9223
+adf.test(xt[,"indpro"], k = 12) # 0.3496
+adf.test(xt[,"pce"], k = 12) # 0.1665
+adf.test(xt[,"fedfunds"], k = 0) # 0.04216
 
+adf.test(diff(log(xt[,"indpro"])), k = 0) # 0.3496
+# “respuesta de las variables macroeconómicas de Guatemala ante una innovación 
+# en el crecimiento de la producción industrial de Estados Unidos”.
+
+adf.test(diff(log(xt[, "pce"])), k = 0) # 0.1665
+
+
+adf_indpro <- ur.df(
+  diff(log(xt[,"indpro"])),
+  type = "trend",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_indpro)
+
+
+
+adf_pce <- ur.df(
+  diff(log(xt[,"pce"])),
+  type = "trend",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_pce)
+
+
+
+adf_fedfund <- ur.df(
+  diff(xt[,"fedfunds"]),
+  type = "drift",
+  lags = 12,
+  selectlags = "AIC"
+)
+summary(adf_fedfund)
 
 # Copias para no modificar los objetos originales
 xt_us <- cbind(
-  indpro = xt[-1, "indpro"],
-  pce = xt[-1, "pce"],
+  dlog_indpro =  diff(log(xt[,"indpro"])),
+  dlog_pce =  diff(log(xt[,"pce"])),
   d_fedfunds = diff(xt[, "fedfunds"])
 )
 
-plot(xt_us)
+# plot(xt_us)
 zt_gt <- zt_var
 
 
@@ -87,3 +161,4 @@ Y <- na.omit(cbind(xt_us, zt_gt))
 
 us_names <- colnames(xt_us)
 gt_names <- colnames(zt_gt)
+

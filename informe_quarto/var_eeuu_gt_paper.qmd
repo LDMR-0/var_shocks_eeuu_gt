@@ -24,6 +24,9 @@ format:
     toc: false
     columns: 1
     section-numbering: 1.1.1
+    margin:
+      x: 1in
+      y: 1in
 
 citeproc: true
 bibliography: references.bib
@@ -171,3 +174,8 @@ La muestra está constituida por observaciones mensuales correspondientes al per
 El análisis de los datos se realizará mediante un modelo estructural de vectores autoregresivos por bloques, compuesto por un bloque macroeconómicode Estados Unidos y otro correspondiente a Guatemala, considerando a este último como una economía pequeña y abierta, se impondran restricciones de exogeneidad por bloques, de forma que las variables guatemaltecas no afecten contempráneamente ni mediante sus rezagos a las variables estadounidense, mientras que las perturbaciones originadas en Estados Unidos podrán transmitirse hacia Guatemala.
 
 Dentro del bloque estadounidense se identificarán choques estructurales de oferta, demanda y política monetaria mediante restricciones de signo fundamentadas en la teoría ecónomica y posteriormente se estimarán las funciones dinámicas de las variables guatemaltecas mediante funciones impulso-respuesta y se determinará la importancia relativa de cada choque mediantela descomposición de la varianza.
+
+# Referencias
+
+::: {#refs}
+:::
