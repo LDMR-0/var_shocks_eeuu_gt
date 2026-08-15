@@ -5,6 +5,9 @@ author: "Luis Daniel Monroy Rojas"
 date: "2026-09-01"
 date-format: "long"
 
+language:
+  crossref-eq-prefix: "ec."
+
 abstract: |
   Este estudio analiza la transmisión de shocks de oferta, demanda y
   política monetaria originados en Estados Unidos hacia la economía
@@ -22,7 +25,7 @@ keywords:
 format:
   typst:
     toc: false
-    columns: 1
+    columns: 1 
     section-numbering: 1.1.1
     margin:
       x: 1in
@@ -45,7 +48,7 @@ A nivel empírico, un enfoque común ha sido el uso de modelos vectores autorreg
 
 Adicionalmente, @Canova2005The encuentra que el canal financiero, particularmente a través de tasas de interés y flujos de capital, es el principal mecanismo de transmisión de estos shocks, superando en relevancia al canal comercial. Asimismo, el estudio evidencia que una proporción importante de la volatilidad macroeconómica en América Latina puede explicarse por perturbaciones externas, lo que sugiere la existencia de un componente común en los ciclos económicos de la región. Estos hallazgos son consistentes con la evidencia teórica sobre la creciente importancia de la integración financiera internacional y refuerzan la necesidad de considerar factores externos en el análisis macroeconómico de economías emergentes.
 
-Los shocks que afectan a la economía de Estados Unidos también tienen efectos relevantes sobre la economía guatemalteca debido a la estrecha interdependencia ambos países, manifestándose principalmente a través del comercio y de manera creciente, mediante el flujo de remesas, el cual ha adquirido una importancia significativa en la estructura macroeconómica del país principalmente en los últimos años. En particular, las remesas representan una fuente importante de ingresos externos para los hogares y una proporción considerable en del PIB. A cuenta de eso, @CastanedaFuentes2018Emigrant señalan el aumento sostenido de las remesas puede generar una apreciación del tipo de cambio real, mediante un incremento de la demanda interna, particularmente de bienes no transables, lo que produce un desplazamiento de recursos del sector transable al no transable lo que elevaría los precios relativos.
+Los shocks que afectan a la economía de Estados Unidos también tienen efectos relevantes sobre la economía guatemalteca debido a la estrecha interdependencia ambos países, manifestándose principalmente a través del comercio y de manera creciente, mediante el flujo de remesas, el cual|ha adquirido una importancia significativa en la estructura macroeconómica del país principalmente en los últimos años. En particular, las remesas representan una fuente importante de ingresos externos para los hogares y una proporción considerable en del PIB. A cuenta de eso, @CastanedaFuentes2018Emigrant señalan el aumento sostenido de las remesas puede generar una apreciación del tipo de cambio real, mediante un incremento de la demanda interna, particularmente de bienes no transables, lo que produce un desplazamiento de recursos del sector transable al no transable lo que elevaría los precios relativos.
 
 ## Marco Contextual
 La economía guatemalteca se inserta en un entorno internacional caracterizado por una elevada interdependencia macroeconómica, en el cual las perturbaciones originadas en economías avanzadas pueden transmitirse hacia economías pequeñas y abiertas mediante distintos canales, en ese contexto, la literatura para América Latina y otras economías emergentes ha mostrado que los shocks de Estados Unidos pueden afectar el producto, la inflación, las tasas de interés y las condiciones externas de los países receptores. En particular, Canova (2005) encuentra que los shocks de Estados Unidos explican una porción importante de la variabilidad macroeconómica en América Latina y que los shocks monetarios tienen efectos más significativos que los shocks reales, con predominio del canal financiero. De forma complementaria, @DeSimone2024The muestra que en pequeñas economías abiertas la política monetaria de Estados Unidos incide de manera importante sobre la actividad económica, la inflación y las tasas de interés, en un contexto donde los canales financieros adquieren creciente relevancia.
@@ -72,8 +75,6 @@ A pesar de estos avances, persiste un vacío en la literatura, primero porque la
 
 ## Pregunta de Investigación
 
-¿Cuál es la magnitud, dirección y persistencia de la respuesta de la razón de exportaciones a importaciones, la tasa líder de política monetaria, la actividad económica, la inflación y el tipo de cambio nominal de Guatemala ante choques estructurales de demanda, oferta y política monetaria originados en Estados Unidos durante el período 2010–2025?
-
 ¿Cuál es la magnitud, dirección y persistencia de la respuesta del Índice Mensual de la Actividad Económica, la inflación, la razón de exportaciones a importaciones, la tasa líder de política monetaria y el tipo de cambio nominal de Guatemala ante choques estructurales de oferta, demanda y política monetaria identificados dentro del bloque macroeconómico de Estados Unidos durante el período 2010–2025?
 
 
@@ -97,15 +98,9 @@ Estimar, mediante un modelo VAR por bloques con identificación estructural, la 
 
 6. Determinar la importancia relativa de cada choque estadounidense en la variabilidad de las variables macroeconómicas de Guatemala mediante la descomposición de la varianza del error de pronóstico.
 
-Opcionales:
-
-7. Evaluar la estabilidad temporal del modelo y la sensibilidad de las respuestas estimadas a la inclusión del período asociado con la pandemia de COVID-19.
-
-8. Evaluar la robustez de los resultados ante estrategias alternativas de identificación, transformaciones de las variables, números de rezagos y medidas de política monetaria estadounidense.
-
 ## Hipótesis Principal $H_1$
 
-Los choques estructurales de oferta, demanda y política monetaria originados en Estados Unidos no generan respuestas dinámicas estadísticamente significativas en la actividad económica, la inflación, la razón de exportaciones a importaciones, la tasa líder de política monetaria ni el tipo de cambio nominal de Guatemala durante el período 2010–2025.
+Los choques estructurales de oferta, demanda y política monetaria originados en Estados Unidos generan respuestas dinámicas estadísticamente significativas en la actividad económica, la inflación, la razón de exportaciones a importaciones, la tasa líder de política monetaria y el tipo de cambio nominal de Guatemala durante el período 2010–2025.
 
 ## Hipótesis Nula $H_0$
 
@@ -154,9 +149,7 @@ La investigación adopta un enfoque cuantitativo econométrico basado en el aná
 
 ### Tipo de Investigación
 
-El presente estudio es de tipo explicativo–causal. Es explicativo, ya que busca analizar cómo los shocks de demanda, oferta y política monetaria de Estados Unidos se transmiten hacia la economía guatemalteca, identificando sus efectos sobre variables macroeconómicas clave.
-
-Asimismo, es de carácter causal, en la medida en que pretende estimar el impacto de estos shocks externos sobre la dinámica de la economía guatemalteca, utilizando un modelo de vectores autorregresivos (VAR) que permite analizar relaciones dinámicas entre variables y aproximar efectos causales a partir de la identificación de shocks estructurales.
+El presente estudio es de tipo explicativo–causal. Es explicativo, ya que busca analizar cómo los shocks de demanda, oferta y política monetaria de Estados Unidos se transmiten hacia la economía guatemalteca, identificando sus efectos sobre variables macroeconómicas clave. Asimismo, es de carácter causal, en la medida en que pretende estimar el impacto de estos shocks externos sobre la dinámica de la economía guatemalteca, utilizando un modelo de vectores autorregresivos (VAR) que permite analizar relaciones dinámicas entre variables y aproximar efectos causales a partir de la identificación de shocks estructurales.
 
 ### Sujeto de Investigación y Unidad de Análisis
 
@@ -165,17 +158,285 @@ La unidad de análisis corresponde a observaciones mensuales de las variables ma
 
 
 ### Población y muestra
-La población de estudio está conformada por todas las observaciones temporales de las variables macroeconómicas relevantes de la economía guatemalteca y estadounidense, en frecuencia mensual, que permiten analizar la transmisión de shocks externos.
-
-La muestra está constituida por observaciones mensuales correspondientes al período comprendido entre enero de 2010 y diciembre de 2025, seleccionadas en función de la disponibilidad y consistencia de la información.
+La población de estudio está conformada por todas las observaciones temporales de las variables macroeconómicas relevantes de la economía guatemalteca y estadounidense, en frecuencia mensual, que permiten analizar la transmisión de shocks externos. La muestra está constituida por observaciones mensuales correspondientes al período comprendido entre enero de 2010 y diciembre de 2025, seleccionadas en función de la disponibilidad y consistencia de la información.
 
 ### Método
 
 El análisis de los datos se realizará mediante un modelo estructural de vectores autoregresivos por bloques, compuesto por un bloque macroeconómicode Estados Unidos y otro correspondiente a Guatemala, considerando a este último como una economía pequeña y abierta, se impondran restricciones de exogeneidad por bloques, de forma que las variables guatemaltecas no afecten contempráneamente ni mediante sus rezagos a las variables estadounidense, mientras que las perturbaciones originadas en Estados Unidos podrán transmitirse hacia Guatemala.
 
-Dentro del bloque estadounidense se identificarán choques estructurales de oferta, demanda y política monetaria mediante restricciones de signo fundamentadas en la teoría ecónomica y posteriormente se estimarán las funciones dinámicas de las variables guatemaltecas mediante funciones impulso-respuesta y se determinará la importancia relativa de cada choque mediantela descomposición de la varianza.
+Dentro del bloque estadounidense se identificarán choques asociados a la oferta, la demanda y la política monetaria mediante una identificación recursiva basada en la descomposición de Cholesky para posteriormente estimar las respuestas dinámicas de las variables guatemaltecas ante dichas perturbaciones mediante funciones impulso-respuesta y evaluar la importancia relativa de cada choque a través e la descomposición de la varianza del error de pronóstico.
 
+# Metodología Econométrica
+Para el análisis de transmisión de perturbaciones macroeconómicas originadas en Estados Unidos hacia la economía guatemalteca se estima un modelo de vectores autorregresivos (VAR) estructurado por bloques porque permite representar la dinámica de las variables estadounidenses y guatemaltecas incorporando el supuesto de que una economía pequeña y abierta como la de Guatemala no afectan de manera relevante la dinámica de la economía estadounidense.
+
+El procedimiento parte de un VAR en forma reducida que posteriormente incorpora restricciones de exclusión sobre el bloque estadounidense y una identificación recursiva mediante la descomposición de Cholesky. De esta forma el modelo permite estimar las respuestas dinámicas de las variables guatemaltecas ante innocaciones ortogonalizadas provenientes de Estados Unidos  en cuenta el enfoque que usa @Canova2005The, en el cual el autor encuentra empíricamente que el bloque estadounidense puede tratarse como exógeno respecto a las variables de las economías latinoamericanas, lo que permite simplificar el análisis de la transmisión internacional.
+
+El modelo utiliza información de frecuencia mensual para Estados Unidos y Guatemala; para el primero se utilizaron las variables de tasa de fondos federales, índice de producción industrial y el gasto en consumo personal (PCE), ya que estas aproximan respectivamente las condiciones de política monetaria, oferta y demanda real de Estados Unidos. Mientras que para el bloque guatemalteco se incorpora la actividad económica medida mediante el IMAE, el índice de precios al consumidor, la tasa de interés líder de política monetaria, la balanza comercial medida mediante el cociente entre exportaciones e importaciones y el tipo de cambio. Las series que presentaron evidencia de raíz unitaria fueron transformadas de acuerdo con su naturaleza económica: para variables expresadas como índices o cantidades positivas se utilizaron diferencias logarítmicas, mientras que para tasas de interés se utilizaron primeras diferencias simples.
+
+A partir de la información anterior, se definieron dos vectores con la siguiente especificación: $x_t$ correspondiente a las variables estadounidenses y un vector $z_t$ para las variables guatemaltecas:
+$$
+x_t =
+\begin{bmatrix}
+\Delta \ln(INDPRO_t) \\
+\Delta \ln(PCE_t) \\
+\Delta FFR_t
+\end{bmatrix}
+\qquad\qquad\qquad
+z_t =
+\begin{bmatrix}
+\Delta \ln(IMAE_t) \\
+\Delta \ln(IPC_t) \\
+\Delta i_t^{GT} \\
+\Delta \ln(BC_t) \\
+TC_t
+\end{bmatrix}
+$$
+
+La transformación $\Delta \ln(IPC_t)$ corresponde aproximadamente a la inflación mensual, mientras que $\Delta\ln(IMAE_t)$ representa aproximadamente el crecimiento mensual de la actividad económica 
+
+Ambos bloques pueden agruparse en un único vector de variables:
+
+$$
+y_t =
+\begin{bmatrix}
+x_t \\
+z_t
+\end{bmatrix}.
+$$
+
+En términos generales, un modelo VAR de orden $p$ para este vector puede expresarse como:
+
+$$
+y_t =
+\tilde{c}
++
+\sum_{j=1}^{p}
+A_j\tilde{y}_{t-j}
++
+\tilde{u}_t,
+$$
+
+donde $\tilde{c}$ representa el vector de constantes, $A_j$ contiene los coeficientes asociados al rezago $j$ y $\tilde{u}_t$ es el vector de innovaciones del modelo.
+
+Dado que las variables se encuentran agrupadas en dos bloques, cada matriz de coeficientes $A_j$ puede particionarse de la siguiente forma:
+
+$$
+A_j =
+\begin{bmatrix}
+A_{XX,j} & A_{XZ,j} \\
+A_{ZX,j} & A_{ZZ,j}
+\end{bmatrix}.
+$$
+
+Esta partición permite distinguir cuatro tipos de relaciones dinámicas. El bloque $A_{XX,j}$ contiene los efectos de los rezagos de las variables estadounidenses sobre las propias variables de Estados Unidos; $A_{XZ,j}$ recoge los posibles efectos de las variables guatemaltecas sobre las estadounidenses; $A_{ZX,j}$ representa la transmisión de las variables estadounidenses hacia Guatemala; y $A_{ZZ,j}$ contiene la dinámica interna de las variables guatemaltecas.
+
+Sin imponer restricciones, el sistema puede escribirse como:
+
+$$
+\begin{bmatrix}
+x_t \\
+z_t
+\end{bmatrix}
+=
+\begin{bmatrix}
+c_X \\
+c_Z
+\end{bmatrix}
++
+\sum_{j=1}^{p}
+\begin{bmatrix}
+A_{XX,j} & A_{XZ,j} \\
+A_{ZX,j} & A_{ZZ,j}
+\end{bmatrix}
+\begin{bmatrix}
+x_{t-j} \\
+z_{t-j}
+\end{bmatrix}
++
+\begin{bmatrix}
+u_{X,t} \\
+u_{Z,t}
+\end{bmatrix}.
+$$
+
+La característica fundamental de esta especificación es que se impone:
+
+$$
+A_{XZ,j}=0,
+\qquad
+\forall j=1,\ldots,p,
+$$
+
+Esta restricción implica que los valores rezagados de las variables guatemaltecas no afectan en las ecuaciones correspondientes al bloque estadounidense, dado el supuesto económico del tamaño relativo de ambas economías en el cual se considera que las fluctuaciones de una economía pequeña y abierta como la de Guatemala no alteran de manera significativa la dinámica macroeconómica de Estados Unidos. Por el contrario, no se restringe el bloque $A_{ZX,j}$, por lo que las variables estadounidenses pueden afectar dinámicamente a las variables guatemaltecas. De esta forma, la matriz de coeficientes para cada rezago adopta una estructura triangular por bloques:
+
+$$
+A_j =
+\begin{bmatrix}
+A_{XX,j} & 0 \\
+A_{ZX,j} & A_{ZZ,j}
+\end{bmatrix}.
+$$
+
+El modelo restringido puede entonces expresarse de la siguiente manera:
+
+$$
+\begin{bmatrix}
+x_t \\
+z_t
+\end{bmatrix}
+=
+\begin{bmatrix}
+c_X \\
+c_Z
+\end{bmatrix}
++
+\sum_{j=1}^{p}
+\begin{bmatrix}
+A_{XX,j} & 0 \\
+A_{ZX,j} & A_{ZZ,j}
+\end{bmatrix}
+\begin{bmatrix}
+x_{t-j} \\
+z_{t-j}
+\end{bmatrix}
++
+\begin{bmatrix}
+u_{X,t} \\
+u_{Z,t}
+\end{bmatrix}.
+$$
+
+Como resultado, las ecuaciones del bloque estadounidense quedan determinadas únicamente por sus propios rezagos, mientras que las variables guatemaltecas dependen tanto de su propia dinámica como de la evolución pasada de las variables estadounidenses:
+
+$$
+x_t =
+c_X
++
+\sum_{j=1}^{p}
+A_{XX,j}x_{t-j}
++
+u_{X,t},
+$$ {#eq-var-eeuu}
+
+$$
+z_t =
+c_Z
++
+\sum_{j=1}^{p}
+A_{ZX,j}x_{t-j}
++
+\sum_{j=1}^{p}
+A_{ZZ,j}z_{t-j}
++
+u_{Z,t}.
+$$ {#eq-var-gt}
+
+Esta estructura establece una relación dinámica unidireccional entre ambos bloques: se permite la transmisión de perturbaciones desde Estados Unidos hacia Guatemala (@eq-var-gt), pero se excluye la retroalimentación desde Guatemala hacia Estados Unidos (@eq-var-eeuu). Esta especificación es consistente con el enfoque empleado por @Canova2005The, quien analiza la transmisión de perturbaciones estadounidenses hacia economías latinoamericanas bajo el supuesto de exogeneidad del bloque de Estados Unidos respecto de las variables domésticas.
+
+La identificación de los shocks estructurales se realizó mediante una descomposición recursiva de Cholesky, la cual permite obtener innovaciones ortogonales a partir del modelo VAR imponiendo restricciones contemporáneas de acuerdo aa orden de las variables [@Lutkepohl2005New; @Lutkepohl2018Structural]. En ese sentido el ordenamiento se estableció considerando primero las variables estadounidenses y luego las guatemaltecas permitiendo que los shocks de Estados Unidos afecten contemporáneamente a Guatemala, pero no en sentido contrario. Adicionalmente el orden refleja la velocidad relativa de respuesta de las variables, considerando que las reales son más lentas, mientras que las variables de política monetaria y cambiarias reaccionan con mayor rapidez.
+
+Dentro del bloque correspondiente a Estados Unidos se adoptó el orden $\left[INDPRO_t,\ PCE_t,\ FEDFUNDS_t\right]$ dado que la producción industrial y el consumo personal real se consideran variables reales que responden con mayor rezago a las perturbaciones monetarias, mientras que la tasa de fondos federales constituye un instrumento de política que puede ajustarse contemporáneamente ante cambios en las condiciones de actividad y demanda. En consecuencia, se supone que las innovaciones en la producción industrial pueden afectar contemporáneamente al consumo y a la tasa de interés, y que el consumo puede afectar contemporáneamente a la tasa de fondos federales, mientras que los efectos de una innovación monetaria sobre las variables reales se materializan con rezago.
+
+Para el bloque guatemalteco se adoptó el orden $\left[IMAE_t,\ IPC_t,\ BC_t,\ i_t,\ TC_t\right]$, donde  el IMAE, la inflación y la balanza comercial se ubican primero al representar variables vinculadas al mercado de bienes y servicios cuyo ajuste ante perturbaciones monetarias y financieras se supone más lento dentro del período; este supuesto es consistente con @Christiano1998Monetary quienes plantean una identificación recursiva en la que la autoridad monetaria puede responder contemporáneamente a las condiciones de actividad y precios, mientras que los efectos de una innovación de política monetaria sobre estas variables se materializan con rezago. Finalmente, el tipo de cambio se ordena al final por ser un precio de mercado con capacidad de reaccionar más rápidamente ante cambios en las condiciones macroeconómicas y monetarias. Finalmente, el tipo de cambio se ordena al final por ser un precio de mercado con capacidad de reaccionar más rápidamente ante cambios en las condiciones macroeconómicas y monetarias @Eichenbaum1995Some.
+
+Considerando las transformaciones realizadas para garantizar la estacionariedad de las series, el orden del sistema es:
+
+$$
+Y_t =
+\begin{bmatrix}
+\Delta\ln(INDPRO_t^{US}) \\
+\Delta\ln(PCE_t^{US}) \\
+\Delta FFR_t^{US} \\
+\Delta\ln(IMAE_t^{GT}) \\
+\Delta\ln(IPC_t^{GT}) \\
+\Delta\ln(BC_t^{GT}) \\
+\Delta i_t^{GT} \\
+TC_t^{GT}
+\end{bmatrix}.
+$$ {#eq-orden-var}
+
+
+Por tanto, el VAR estimado puede representarse como:
+
+$$
+y_t =
+c
++
+\sum_{j=1}^{p}
+A_jY_{t-j}
++
+u_t,
+$$ {#eq-var-reducido}
+
+donde $u_t$ representa el vector de innovaciones en forma reducida. Debido a que estas innovaciones pueden estar correlacionadas contemporáneamente, se parte de su matriz de varianzas y covarianzas:
+
+$$
+E(u_tu_t')=\Sigma_u,
+$$
+
+y se aplica la descomposición de Cholesky:
+
+$$
+\Sigma_u=PP',
+$$
+
+donde $P$ es una matriz triangular inferior. De esta manera:
+
+$$
+u_t=P\varepsilon_t,
+$$ 
+
+con
+
+$$
+E(\varepsilon_t\varepsilon_t')=I,
+$$
+
+de modo que $\varepsilon_t$ contiene las innovaciones ortogonalizadas del sistema. Dado el orden establecido en @eq-orden-var, la estructura contemporánea impuesta mediante Cholesky puede representarse como:
+
+$$
+\begin{pmatrix}
+u_{INDPRO} \\
+u_{PCE} \\
+u_{FEDFUNDS} \\
+u_{IMAE} \\
+u_{IPC} \\
+u_{BC} \\
+u_i \\
+u_{TC}
+\end{pmatrix}
+=
+\begin{pmatrix}
+p_{11} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+p_{21} & p_{22} & 0 & 0 & 0 & 0 & 0 & 0 \\
+p_{31} & p_{32} & p_{33} & 0 & 0 & 0 & 0 & 0 \\
+p_{41} & p_{42} & p_{43} & p_{44} & 0 & 0 & 0 & 0 \\
+p_{51} & p_{52} & p_{53} & p_{54} & p_{55} & 0 & 0 & 0 \\
+p_{61} & p_{62} & p_{63} & p_{64} & p_{65} & p_{66} & 0 & 0 \\
+p_{71} & p_{72} & p_{73} & p_{74} & p_{75} & p_{76} & p_{77} & 0 \\
+p_{81} & p_{82} & p_{83} & p_{84} & p_{85} & p_{86} & p_{87} & p_{88}
+\end{pmatrix}
+\begin{pmatrix}
+\varepsilon_{INDPRO} \\
+\varepsilon_{PCE} \\
+\varepsilon_{FEDFUNDS} \\
+\varepsilon_{IMAE} \\
+\varepsilon_{IPC} \\
+\varepsilon_{BC} \\
+\varepsilon_i \\
+\varepsilon_{TC}
+\end{pmatrix}
+$$ {#eq-identificacion-cholesky}
+
+
+
+
+
+
+
+```{=typst}
+#pagebreak()
+```
 # Referencias
-
 ::: {#refs}
 :::
