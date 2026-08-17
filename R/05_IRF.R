@@ -16,8 +16,8 @@ irf_us_gt <- irf(
   n.ahead = 12,
   ortho = TRUE,
   boot = TRUE,
-  runs = 500,
-  ci = 0.68
+  runs = 5000,
+  ci = 0.90
 )
 
 
@@ -52,20 +52,28 @@ limpiar_nombre <- function(x) {
   x
 }
 
+# Función para limpiar los nombres mostrados en los facets
+limpiar_nombre <- function(x) {
+  x <- sub("^xt_us\\.", "", x)
+  x <- sub("^zt_gt\\.", "", x)
+  x
+}
+
 ggplot(irf_df, aes(x = Period, y = Value)) +
   geom_ribbon(
     aes(ymin = Lower, ymax = Upper),
-    fill = "#3498db",
-    alpha = 0.2
+    fill = "#A9C6CF",
+    alpha = 0.45
   ) +
   geom_line(
-    color = "#2c3e50",
+    color = "#1F4E5F",
     linewidth = 0.8
   ) +
   geom_hline(
     yintercept = 0,
-    color = "red",
-    linetype = "dashed"
+    color = "#8A3B3B",
+    linetype = "dashed",
+    linewidth = 0.5
   ) +
   facet_grid(
     Response ~ Impulse,
@@ -84,8 +92,20 @@ ggplot(irf_df, aes(x = Period, y = Value)) +
   ) +
   theme_bw() +
   theme(
-    strip.background = element_rect(fill = "#ecf0f1"),
-    strip.text = element_text(face = "bold")
+    strip.background = element_rect(
+      fill = "#D9E4E8"
+    ),
+    strip.text = element_text(
+      face = "bold",
+      color = "#243238"
+    ),
+    plot.title = element_text(
+      face = "bold",
+      color = "#243238"
+    ),
+    plot.subtitle = element_text(
+      color = "#4F5B60"
+    )
   )
 
 

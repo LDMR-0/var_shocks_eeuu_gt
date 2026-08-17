@@ -22,19 +22,33 @@ keywords:
   - funciones impulso-respuesta
   - Guatemala     
 
+lang: es
+
 format:
   typst:
     toc: false
     columns: 1 
     section-numbering: 1.1.1
+    tbl-cap-location: top
     margin:
       x: 1in
       y: 1in
 
-citeproc: true
 bibliography: references.bib
-csl: https://www.zotero.org/styles/apa-with-abstract
+csl: apa
 ---
+
+```{=typst}
+#show figure.caption.where(kind: "quarto-float-tbl"): it => block(width: 100%)[
+  #align(center)[
+    #strong[
+      #it.supplement #context it.counter.display(it.numbering)
+    ]
+    #linebreak()
+    #emph(it.body)
+  ]
+]
+```
 
 {{< pagebreak >}}
 
@@ -428,15 +442,56 @@ p_{81} & p_{82} & p_{83} & p_{84} & p_{85} & p_{86} & p_{87} & p_{88}
 \end{pmatrix}
 $$ {#eq-identificacion-cholesky}
 
+# Resultados
+
+## Especificación y diagnóstico del modelo
+La selección del número de rezagos se realizó comparando los criterios de información de Akaike (AIC), Hannan-Quinn (HQ) y Schwarz (SC), los cuales presentaron diferencias respecto al orden óptimo del VAR. El criterio AIC favoreció una especificación con 12 rezagos, un horizonte razonable de considerar dada la frecuencia mensual de los datos. Sin embargo, para la estimación final se adoptó el número de rezagos indicado por el criterio de Schwarz, debido a que este penaliza en mayor medida la incorporación de parámetros adicionales y favorece una especificación más parsimoniosa Esta consideración resulta especialmente relevante en un modelo multivariado con información mensual, donde cada rezago adicional incrementa considerablemente el número de parámetros a estimar. Adicionalmente, las especificaciones con un mayor número de rezagos generaron funciones impulso-respuesta considerablemente más volátiles, lo que sugiere una mayor sensibilidad de la dinámica estimada ante una parametrización más extensa en relación con el tamaño de la muestra.
+
+|Criterio             | Rezagos seleccionados | Decisión |
+|---------------------|-----------------------:|:----------:|
+|Akaike (AIC)         | 12                    | No seleccionado |
+|Hannan-Quinn (HQ)    | 2                     | No seleccionado |
+|Schwarz (SC)         | 1                     | Seleccionado |
+
+: Criterios de selección del número de rezagos {#tbl-rezagos}
+
+En cuanto a la estabilidad del modelo, los módulos de las raíces del VAR se encuentran por debajo de la unidad, siendo 0.9495 el valor máximo observado (@tbl-raices). Por tanto, el sistema satisface la condición de estabilidad, lo que permite analizar las funciones impulso-respuesta bajo una dinámica convergente después de las perturbaciones. Aunque la raíz de mayor módulo se encuentra relativamente próxima a uno, permanece dentro del círculo unitario, lo que sugiere la presencia de cierta persistencia en la dinámica del sistema sin comprometer su estabilidad.
 
 
+| Raíz | Módulo |
+|------|-------:|
+| 1 | 0.9495 |
+| 2 | 0.6905 |
+| 3 | 0.5466 |
+| 4 | 0.5466 |
+| 5 | 0.3562 |
+| 6 | 0.2361 |
+| 7 | 0.1975 |
+| 8 | 0.1975 |
+
+: Raíces del modelo VAR {#tbl-raices}
+: Módulos de las raíces del modelo VAR {#tbl-raices}
+
+Por otra parte, la prueba multivariada de Jarque-Bera rechaza la hipótesis nula de normalidad de los residuos ($\chi^2=7148.90$, $p<0.001$). Este resultado se confirma tanto en el componente de asimetría ($\chi^2=294.39$, $p<0.001$) como, especialmente, en el componente de curtosis ($\chi^2=6854.50$, $p<0.001$), evidenciando desviaciones importantes respecto de una distribución normal multivariada (@tbl-normalidad). Si bien este resultado debe considerarse al realizar inferencia sobre el modelo, el incumplimiento de normalidad no implica por sí solo que la especificación del VAR sea inadecuada, por lo que su evaluación debe complementarse con las pruebas de estabilidad y de autocorrelación de los residuos.
 
 
+| Prueba | Estadístico $\chi^2$ | gl | p-valor | Resultado |
+|---|--:|-:|-:|:---|
+| Jarque-Bera multivariado | 7148.90 | 16 | < 0.001 | Se rechaza normalidad |
+| Asimetría | 294.39 | 8 | < 0.001 | Se rechaza |
+| Curtosis | 6854.50 | 8 | < 0.001 | Se rechaza |
 
+: Pruebas de normalidad multivariada de los residuos {#tbl-normalidad}
+
+
+## Funciones impulso-respuesta
 
 ```{=typst}
 #pagebreak()
+#set bibliography(title: none)
 ```
+
 # Referencias
+
 ::: {#refs}
 :::

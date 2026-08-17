@@ -1,6 +1,6 @@
 
 #Variables Endógenas
-zt <- ts(data[, c("i", "tc", "imae", "ipc", "bc")],  start = c(2010, 1), frequency = 12)
+zt <- ts(data[, c("imae", "ipc", "bc", "i", "tc")],  start = c(2010, 1), frequency = 12)
 # Variavles Exógenas
 xt <- ts(data[, c("indpro", "pce", "fedfunds")], start = c(2010, 1), frequency = 12)
 
