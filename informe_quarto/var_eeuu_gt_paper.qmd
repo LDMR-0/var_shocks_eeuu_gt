@@ -26,6 +26,8 @@ lang: es
 
 format:
   typst:
+    mainfont: "Times New Roman"
+    fontsize: 12pt
     toc: false
     columns: 1 
     section-numbering: 1.1.1
@@ -41,12 +43,62 @@ csl: apa
 ```{=typst}
 #show figure.caption.where(kind: "quarto-float-tbl"): it => block(width: 100%)[
   #align(center)[
-    #strong[
+    #text[
       #it.supplement #context it.counter.display(it.numbering)
     ]
     #linebreak()
     #emph(it.body)
   ]
+]
+```
+
+```{=typst}
+#show figure.caption: it => [
+  #stack(
+    dir: ttb,
+    spacing: 0.8em,
+
+    [#align(center)[
+      #strong[
+        #it.supplement #context it.counter.display(it.numbering)
+      ]
+    ]],
+
+    [#align(center)[
+      #it.body
+    ]],
+  )
+]
+
+#let apa-figure(
+  path,
+  title,
+  fig_label,
+  note: none,
+  width: 100%,
+) = [
+  #figure(
+    [
+      #align(center)[
+        #image(path, width: width)
+      ]
+
+      #if note != none [
+        #v(0.35em)
+
+        #align(left)[#text(size: 12pt, weight: "regular", font: "Times New Roman")[
+          #emph[Nota.] #note
+        ]]
+      ]
+    ],
+    caption: figure.caption(
+      position: top,
+      title,
+    ),
+    supplement: [Figura],
+    kind: image,
+  )
+  #label(fig_label)
 ]
 ```
 
@@ -102,7 +154,7 @@ Estimar, mediante un modelo VAR por bloques con identificación estructural, la 
 
 1. Especificar y estimar un modelo VAR estructural por bloques que incorpore las variables macroeconómicas de Estados Unidos y Guatemala, imponiendo la exogeneidad del bloque estadounidense respecto de la economía guatemalteca.
 
-2. Identificar, dentro del bloque macroeconómico de Estados Unidos, choques estructurales de oferta, demanda y política monetaria mediante restricciones de signo fundamentadas en la teoría económica.
+2. Identificar, dentro del bloque macroeconómico de Estados Unidos, choques estructurales de oferta, demanda y política monetaria mediante descomposición de Cholesky fundamentado en la teoría económica.
 
 3. Estimar la respuesta dinámica del Índice Mensual de la Actividad Económica y de la inflación de Guatemala ante cada tipo de choque estructural estadounidense.
 
@@ -485,6 +537,88 @@ Por otra parte, la prueba multivariada de Jarque-Bera rechaza la hipótesis nula
 
 
 ## Funciones impulso-respuesta
+
+Las funciones impulso-respuesta (IRF) se obtuvieron a partir del modelo VAR estructurado por bloques planteado previamente, la cual permite analizar la transmisión dinámica de innovaciones originadas en el bloque macroeconómico de Estados Unidos hacia las variables de la economía guatemalteca, manteniendo el supuesto de exogeneidad del bloque estadounidense respecto de Guatemala como se muestran a cointunación.
+
+<!-- ![Funciones impulso-respuesta de las variables guatemaltecas ante una innovación asociada a la producción industrial de Estados Unidos.](figuras/irf_indpro.png){#fig-irf-indpro} -->
+
+```{=typst}
+#apa-figure(
+  "figuras/irf_indpro.png",
+  [Funciones impulso-respuesta de las variables guatemaltecas ante un shock asociado a la producción industrial de Estados Unidos],
+  "fig-irf-indpro",
+  note: [
+    La línea continua representa la respuesta estimada y el área sombreada corresponde al intervalo de confianza.
+  ],
+)
+```
+
+Como se observa en la `@fig-irf-indpro`{=typst}, una innovación positiva asociada a la producción industrial de Estados Unidos genera una respuesta positiva e inmediata de la actividad económica guatemalteca, cuyo efecto alcanza su mayor magnitud en el período de impacto y se disipa rápidamente durante los dos meses siguientes. En este sentido, se evidencia que es un efecto de corta duración, siendo el IMAE la única variable con una respuesta estadísticamente significativa en contraste con el resto de variables analizadas en el estudio; las cuales presentan respuestas puntuales de distinta dirección, pero sus intervalos de confianza contienen el cero durante el horizonte analizado. 
+
+Este comportamiento es consistente, en términos generales, con la evidencia de @Canova2005The, quien encuentra que los shocks de oferta originados en Estados Unidos generan efectos limitados sobre la economía latinoamericana típica durante la mayor parte del horizonte, aunque identifica una reducción significativa y transitoria del producto alrededor del séptimo trimestre ante un shock contractivo de oferta. En comparación, para Guatemala la respuesta de la actividad económica se concentra en el período de impacto y desaparece rápidamente, lo que sugiere una transmisión más inmediata pero igualmente poco persistente.
+
+```{=typst}
+#apa-figure(
+  "figuras/irf_pce.png",
+  [Funciones impulso-respuesta de las variables guatemaltecas ante un shock asociado a la demanda de Estados Unidos],
+  "fig-irf-pce",
+  note: [
+  Se utiliza el gasto de consumo personal real (PCE) como aproximación de una innovación asociada a la demanda de Estados Unidos. La línea continua representa la respuesta estimada y el área sombreada corresponde al intervalo de confianza.
+  ],
+)
+```
+
+Como se observa en la `@fig-irf-pce`{=typst}, una innovación positiva asociada al gasto de consumo personal de Estados Unidos genera inicialmente una respuesta positiva de la actividad económica guatemalteca, medida por el IMAE, que alcanza su mayor magnitud alrededor del primer mes y posteriormente se desvanece, llegando incluso a registrar una respuesta negativa transitoria entre el tercer y cuarto mes antes de converger nuevamente hacia cero. No obstante, los intervalos de confianza incluyen el cero durante el horizonte analizado, por lo que esta respuesta no resulta estadísticamente significativa. Un comportamiento similar se observa en la inflación, la razón de exportaciones a importaciones y la tasa líder de política monetaria, cuyas respuestas puntuales presentan oscilaciones de signo durante los primeros meses, pero sin evidencia estadística de un efecto sistemático. Por su parte, el tipo de cambio nominal registra una respuesta negativa relativamente persistente en la estimación puntual, compatible con una apreciación del quetzal frente al dólar. En conjunto, los resultados sugieren que una innovación asociada a la demanda estadounidense produce efectos reducidos e imprecisos sobre las variables macroeconómicas guatemaltecas. Este resultado es consistente con la evidencia de @Canova2005The, quien encuentra que las respuestas del producto y la inflación de las economías latinoamericanas ante shocks reales de demanda de Estados Unidos son, en general, pequeñas y estadísticamente no significativas.
+
+```{=typst}
+#apa-figure(
+  "figuras/irf_fedfunds.png",
+  [Funciones impulso-respuesta de las variables guatemaltecas ante un schock de la política monetaria de Estados Unidos],
+  "fig-irf-fedfunds",
+  note: [
+  Se utiliza la tasa de fondos federales (FEDFUNDS) como indicador de una innovación de política monetaria de Estados Unidos; un aumento en la tasa se interpreta como un endurecimiento de la postura monetaria. La línea continua representa la respuesta estimada y el área sombreada corresponde al intervalo de confianza
+  ],
+)
+```
+
+
+Como se observa en la `@fig-irf-fedfunds`{=typst}, una innovación positiva en la tasa de fondos federales que se interpreta como un shock contractivo de política monetaria de Estados Unidos tiene su respuesta más clara sobre la tasa líder de política monetaria de Guatemala, la cual reacciona de forma positiva en el primer mes y su banda de confianza se mantiene por encima de cero por 6 meses, regresando a su punto estacionario gradualmente. La respuesta positiva de la tasa líder ante una innovación contractiva de política monetaria estadounidense puede interpretarse como evidencia de la transmisión del endurecimiento de las condiciones financieras internacionales hacia la política monetaria doméstica. Un incremento de la tasa de fondos federales eleva el rendimiento relativo de los activos denominados en dólares y puede generar presiones sobre los flujos de capital, las tasas de interés y el mercado cambiario, frente a las cuales la autoridad monetaria nacional puede ajustar su postura.
+
+La inflación presenta una respuesta positiva de pequeña magnitud ante el shock monetario estadounidense, especialmente en los primeros períodos, aunque su intervalo de confianza incluye el cero y, por tanto, no permite afirmar que el efecto sea estadísticamente significativo. Dado que la variable se encuentra expresada como $\Delta\ln(ipc_t)$ esta respuesta debe interpretarse como una variación en la tasa de crecimiento aproximadamente del 0.06% en la inflación mensual. En contraste las demás variables muestran respuestas más débiles, que contienen el cero en sus bandas de nivel de confianza.
+
+Este resultado es consistente con @Canova2005The, quien encuentra que un shock monetario contractivo de Estados Unidos genera incrementos significativos en las tasas de interés de las economías latinoamericanas y destaca al canal financiero como uno de los principales mecanismos de transmisión de las perturbaciones estadounidenses. Este resultado también es consistente con @DeSimone2024The, quien encuentra que la transmisión de la política monetaria estadounidense hacia pequeñas economías abiertas opera de manera importante mediante el canal financiero, cuya relevancia se ha fortalecido desde la crisis financiera global.
+
+## Descomposición de la varianza
+
+La descomposición de la varianza del error de pronóstico permite complementar el análisis de las funciones impulso-respuesta al cuantificar la importancia relativa de cada perturbación en la dinámica de las variables guatemaltecas. En particular, este análisis permite determinar qué proporción de la variabilidad futura de cada variable puede atribuirse a shocks asociados a la actividad productiva, la demanda y la política monetaria de Estados Unidos, así como observar cómo dicha contribución evoluciona a distintos horizontes de pronóstico.
+
+```{=typst}
+#apa-figure(
+  "figuras/fevd_dinamica.png",
+  [Descomposición de la varianza del error de pronóstico ante innovaciones de Estados Unidos],
+  "fig-fevd-dinamica",
+  note: [
+  Cada línea muestra el porcentaje de la varianza del error de pronóstico de la variable guatemalteca que es explicado por cada innovación originada en Estados Unidos, para horizontes de 1 a 12 meses. Los porcentajes corresponden únicamente a los shocks de variables estadounidenses, por lo que no suman 100%; la proporción restante es explicada por los shocks domésticos incluidos en el VAR.],
+)
+```
+
+Como se observa en la `@fig-fevd-dinamica`{=typst}, la importancia de las perturbaciones estadounidenses difiere considerablemente según la variable guatemalteca analizada. Las innovaciones asociadas a la oferta  de Estados Unidos son las que explican una mayor proporción de la varianza del IMAE y de la razón de exportaciones a importaciones, lo que sugiere una mayor exposición de las variables reales y comerciales a las condiciones de actividad de Estados Unidos y en menor medida a las innovaciones asociadas a la demanda y de política monetaria. 
+
+Sin embargo, la magnitud de estas contribuciones es relativamente reducida: explicando alrededor de 8% de la varianza de la actividad económica en Guatemala y una proporción considerablemente menor de la razón de exportaciones a importaciones. Esto sugiere que, aunque existe evidencia de transmisión a través del canal real y comercial, su capacidad para explicar las fluctuaciones de las variables guatemaltecas es limitada. En contraste, el canal monetario presenta una mayor relevancia, ya que las innovaciones asociadas a shocks de política monetaria estadounidense explican alrededor del 20% de al varianza de la tasa líder de la política monetaria y cerca del 3% de la inflación a horizontes medios y largos. Este resultado es consistente con la evidencia de @mackowiak2007, quien encuentra que los shocks de política monetaria estadounidense se transmiten con rapidez hacia las tasas de interés y otras variables financieras de las economías emergentes.
+
+
+```{=typst}
+#apa-figure(
+  "figuras/fevd_12_meses.png",
+  [Contribución de los shocks de Estados Unidos a la varianza del error de pronóstico a 12 meses],
+  "fig-fevd-12meses",
+  note: [
+  Las barras muestran el porcentaje de la varianza del error de pronóstico de cada variable guatemalteca explicado por shocks asociados a la actividad productiva, la demanda y la política monetaria de Estados Unidos. La proporción restante de la varianza corresponde a shocks domésticos del sistema y no se muestra en la figura.],
+)
+```
+
+La  `@fig-fevd-12meses`{=typst} muestra la descomposición de la varianza del error de pronóstico a un horizonte de doce meses, lo que permite evaluar qué proporción de la incertidumbre futura de cada variable guatemalteca puede atribuirse a los distintos shocks originados en Estados Unidos después de un año. Los resultados muestran que la mayor contribución se observa en la tasa líder de política monetaria de Guatemala, donde cerca de una cuarta parte de su varianza es explicada por shocks estadounidenses, principalmente por innovaciones en la tasa de política monetaria de Estados Unidos. En el caso del índice de actividad económica de Guatemala, la mayor contribución proviene de las innovaciones asociadas a la actividad productiva estadounidense, mientras que para la razón de exportaciones a importaciones también predomina este componente. Por su parte, la inflación y el tipo de cambio nominal presentan una participación menor de los shocks externos, aunque en ambos casos destaca relativamente el componente asociado a la política monetaria estadounidense.
+
 
 ```{=typst}
 #pagebreak()
