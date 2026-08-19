@@ -112,7 +112,9 @@ graficar_irf_shock <- function(datos, shock) {
             scales = "free_y",
             labeller = labeller(
                 Response_clean = as_labeller(etiquetas_respuesta)
-            )
+            ),
+            axes = "all_x",
+            axis.labels = "all_x"
         ) +
         
         # Eje horizontal
@@ -120,21 +122,21 @@ graficar_irf_shock <- function(datos, shock) {
             breaks = seq(
                 0,
                 max(datos_shock$Period),
-                by = 2
+                by = 1
             ),
             expand = expansion(mult = c(0.01, 0.02))
         ) +
         
         # Títulos y etiquetas
         labs(
-            title = titulos_shock[[shock]],
-            subtitle = subtitulos_shock[[shock]],
+            #title = titulos_shock[[shock]],
+            #subtitle = subtitulos_shock[[shock]],
             x = "Meses después del shock",
-            y = "Respuesta",
-            caption = paste(
-                "Nota: la línea continua representa la respuesta estimada;",
-                "el área sombreada corresponde al intervalo de confianza."
-            )
+            y = "Respuesta"#,
+            # caption = paste(
+            #     "Nota: la línea continua representa la respuesta estimada;",
+            #     "el área sombreada corresponde al intervalo de confianza."
+            # )
         ) +
         
         theme_minimal(base_size = 11) +
@@ -252,28 +254,30 @@ fig_fedfunds
 # ============================================================
 
 ggsave(
-    "output/irf_indpro.png",
+    "informe_quarto/figuras/irf_indpro.png",
     fig_indpro,
-    width = 9,
-    height = 8,
-    dpi = 300,
+    width = 6.5,
+    height = 4.5,
+    units = "in",
+    dpi = 600,
     bg = "white"
 )
-
 ggsave(
-    "output/irf_pce.png",
+    "informe_quarto/figuras/irf_pce.png",
     fig_pce,
-    width = 9,
-    height = 8,
-    dpi = 300,
+    width = 6.5,
+    height = 4.5,
+    units = "in",
+    dpi = 600,
     bg = "white"
 )
 
 ggsave(
-    "output/irf_fedfunds.png",
+    "informe_quarto/figuras/irf_fedfunds.png",
     fig_fedfunds,
-    width = 9,
-    height = 8,
-    dpi = 300,
+    width = 6.5,
+    height = 4.5,
+    units = "in",
+    dpi = 600,
     bg = "white"
 )
